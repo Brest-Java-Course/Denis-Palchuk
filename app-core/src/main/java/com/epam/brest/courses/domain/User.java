@@ -16,4 +16,13 @@ public class User {
     public String getLogin() {
         return login;
     }
+    public void setLogin(String login) {
+        this.login=login;
+    }
+    public void setUserName(String userName) {
+        this.userName=userName;
+    }
+    public String getUserName() {
+        return userName;
+    }
 }
