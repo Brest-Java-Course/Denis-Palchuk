@@ -8,7 +8,7 @@ public class User {
 	private String userName;
 	
 	public Long getUserId() {
-		return UserId;
+		return userId;
 	}
 	public void setUserId(Long userId) {
 		this.userId=userId;
