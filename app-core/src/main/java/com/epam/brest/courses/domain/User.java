@@ -13,4 +13,7 @@ public class User {
 	public void setUserId(Long userId) {
 		this.userId=userId;
 	}
+    public String getLogin() {
+        return login;
+    }
 }
