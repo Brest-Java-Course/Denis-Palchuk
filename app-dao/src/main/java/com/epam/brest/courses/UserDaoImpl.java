@@ -17,4 +17,8 @@ public class UserDaoImpl implements UserDao{
     public void removeUser(Long userId) {
 
     }
+
+    public void addUser(User user) {
+
+    }
 }
