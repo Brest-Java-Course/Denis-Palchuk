@@ -16,6 +16,8 @@ import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
+
+
     private JdbcTemplate jdbcTemplate;
 
     public void setDataSource(DataSource dataSource) {
@@ -28,8 +30,19 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void removeUser(Long userId) {
+    public User getUserById(Long id) {
+        return jdbcTemplate.queryForObject("select userid, login, name from USER where userid = "+id,
+                new UserMapper());
+    }
 
+    @Override
+    public User getUserByLogin(String login) {
+        return jdbcTemplate.queryForObject("select userid, login, name from USER where login = '" + login + "'",
+                new UserMapper());
+    }
+    @Override
+    public void removeUser(Long userId) {
+        jdbcTemplate.update("delete from USER where userid = ?",userId);
     }
 
     public void addUser(User user) {

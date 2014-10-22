@@ -7,6 +7,9 @@ import com.epam.brest.courses.domain.User;
  */
 public interface UserDao {
     public List<User> getUsers();
+    public User getUserById(Long id);
+    public User getUserByLogin(String login);
     public void addUser(User user);
     public void removeUser(Long userId);
+
 }

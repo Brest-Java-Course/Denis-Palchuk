@@ -24,7 +24,16 @@ public class UserDaoImplTest {
         assertNotNull(users);
         assertFalse(users.isEmpty());
     }
-
+    @Test
+    public void getUserById() {
+        User user=userDao.getUserById(1L);
+        assertEquals(user.getUserId(),(Long)1L);
+    }
+    @Test
+    public void getUserByLogin() {
+        User user=userDao.getUserByLogin("userLogin1");
+        assertEquals(user.getLogin(),"userLogin1");
+    }
     @Test
     public void addUser() {
         List<User> users=userDao.getUsers();
@@ -39,4 +48,14 @@ public class UserDaoImplTest {
         users=userDao.getUsers();
         assertEquals(sizeBefore,users.size()-1);
     }
+
+    @Test
+    public void removeUser() {
+        List<User> users=userDao.getUsers();
+        int sizeBefore=users.size();
+        userDao.removeUser(2L);
+        users=userDao.getUsers();
+        assertEquals(sizeBefore,users.size()+1);
+    }
+
 }
