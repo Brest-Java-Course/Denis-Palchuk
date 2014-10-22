@@ -1,4 +1,4 @@
-package com.epam.brest.courses;
+package com.epam.brest.courses.dao;
 
 /**
  * Created by denis on 10/20/14.

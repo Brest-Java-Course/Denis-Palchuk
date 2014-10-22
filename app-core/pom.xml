@@ -9,7 +9,7 @@
     <parent>
         <groupId>com.epam.brest.courses</groupId>
         <version>1.0.0-SNAPSHOT</version>
-        <artifactId>sampleusermanagment</artifactId>
+        <artifactId>sampleusermanagement</artifactId>
     </parent>
 
     <properties>
