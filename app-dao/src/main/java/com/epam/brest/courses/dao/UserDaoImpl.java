@@ -31,14 +31,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserById(Long id) {
-        return jdbcTemplate.queryForObject("select userid, login, name from USER where userid = "+id,
-                new UserMapper());
+        return jdbcTemplate.queryForObject("select userid, login, name from USER where userid = ?",
+                new Object[]{id},new UserMapper());
     }
 
     @Override
     public User getUserByLogin(String login) {
-        return jdbcTemplate.queryForObject("select userid, login, name from USER where login = '" + login + "'",
-                new UserMapper());
+        return jdbcTemplate.queryForObject("select userid, login, name from USER where login = ?",
+                new Object[]{login},new UserMapper());
     }
     @Override
     public void removeUser(Long userId) {
