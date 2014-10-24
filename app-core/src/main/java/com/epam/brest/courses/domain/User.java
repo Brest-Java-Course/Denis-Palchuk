@@ -25,4 +25,13 @@ public class User {
     public String getUserName() {
         return userName;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", login='" + login + '\'' +
+                ", userName='" + userName + '\'' +
+                '}';
+    }
 }
