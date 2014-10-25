@@ -17,7 +17,14 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
 
-
+    public static final String SELECT_ALL_USERS_SQL = "select userid, login, name from USER";
+    public static final String SELECT_USER_BY_ID_SQL = "select userid, login, name from USER where userid = ?";
+    public static final String SELECT_USER_BY_LOGIN_SQL = "select userid, login, name from USER where login = ?";
+    public static final String DELETE_USER_BY_ID_SQL = "delete from USER where userid = ?";
+    public static final String ADD_USER_SQL = "insert into USER (userid,login,name) values (?, ?, ?)";
+    public static final String USER_ID = "userid";
+    public static final String NAME = "name";
+    public static final String LOGIN = "login";
     private JdbcTemplate jdbcTemplate;
 
     public void setDataSource(DataSource dataSource) {
@@ -26,27 +33,27 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getUsers() {
-        return jdbcTemplate.query("select userid, login, name from USER", new UserMapper());
+        return jdbcTemplate.query(SELECT_ALL_USERS_SQL, new UserMapper());
     }
 
     @Override
     public User getUserById(Long id) {
-        return jdbcTemplate.queryForObject("select userid, login, name from USER where userid = ?",
+        return jdbcTemplate.queryForObject(SELECT_USER_BY_ID_SQL,
                 new Object[]{id},new UserMapper());
     }
 
     @Override
     public User getUserByLogin(String login) {
-        return jdbcTemplate.queryForObject("select userid, login, name from USER where login = ?",
+        return jdbcTemplate.queryForObject(SELECT_USER_BY_LOGIN_SQL,
                 new Object[]{login},new UserMapper());
     }
     @Override
     public void removeUser(Long userId) {
-        jdbcTemplate.update("delete from USER where userid = ?",userId);
+        jdbcTemplate.update(DELETE_USER_BY_ID_SQL,userId);
     }
 
     public void addUser(User user) {
-        jdbcTemplate.update("insert into USER (userid,login,name) values (?, ?, ?)",
+        jdbcTemplate.update(ADD_USER_SQL,
                 user.getUserId(), user.getLogin(), user.getUserName());
     }
 
@@ -54,9 +61,9 @@ public class UserDaoImpl implements UserDao {
         @Override
         public User mapRow(ResultSet resultSet, int i) throws SQLException {
             User user = new User();
-            user.setUserId(resultSet.getLong("userid"));
-            user.setUserName(resultSet.getString("name"));
-            user.setLogin(resultSet.getString("login"));
+            user.setUserId(resultSet.getLong(USER_ID));
+            user.setUserName(resultSet.getString(NAME));
+            user.setLogin(resultSet.getString(LOGIN));
             return user;
         }
     }
