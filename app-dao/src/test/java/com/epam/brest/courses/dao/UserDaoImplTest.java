@@ -57,5 +57,15 @@ public class UserDaoImplTest {
         users=userDao.getUsers();
         assertEquals(sizeBefore,users.size()+1);
     }
-
+    @Test
+    public void updateUser() {
+        User user = new User();
+        user.setLogin("uniqLogin");
+        user.setUserId(2L);
+        user.setUserName("uniqName");
+        userDao.updateUser(user);
+        User updatedUser = userDao.getUserById(2L);
+        assertEquals(user.getLogin(),updatedUser.getLogin());
+        assertEquals(user.getUserName(),updatedUser.getUserName());
+    }
 }

@@ -25,6 +25,7 @@ public class UserDaoImpl implements UserDao {
     public static final String USER_ID = "userid";
     public static final String NAME = "name";
     public static final String LOGIN = "login";
+    public static final String UPDATE_USER_SQL = "update user set name = ?, login = ? where userid = ?";
     private JdbcTemplate jdbcTemplate;
 
     public void setDataSource(DataSource dataSource) {
@@ -51,10 +52,14 @@ public class UserDaoImpl implements UserDao {
     public void removeUser(Long userId) {
         jdbcTemplate.update(DELETE_USER_BY_ID_SQL,userId);
     }
-
+    @Override
     public void addUser(User user) {
         jdbcTemplate.update(ADD_USER_SQL,
                 user.getUserId(), user.getLogin(), user.getUserName());
+    }
+    @Override
+    public void updateUser(User user) {
+        jdbcTemplate.update(UPDATE_USER_SQL,user.getUserName(),user.getLogin(),user.getUserId());
     }
 
     public class UserMapper implements RowMapper<User> {

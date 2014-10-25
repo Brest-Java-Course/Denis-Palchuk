@@ -11,5 +11,5 @@ public interface UserDao {
     public User getUserByLogin(String login);
     public void addUser(User user);
     public void removeUser(Long userId);
-
+    public void updateUser (User user);
 }
