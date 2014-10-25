@@ -5,6 +5,8 @@ package com.epam.brest.courses.dao;
  */
 
 import com.epam.brest.courses.domain.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -27,38 +29,44 @@ public class UserDaoImpl implements UserDao {
     public static final String LOGIN = "login";
     public static final String UPDATE_USER_SQL = "update user set name = ?, login = ? where userid = ?";
     private JdbcTemplate jdbcTemplate;
-
+    private static final Logger LOGGER = LogManager.getLogger();
     public void setDataSource(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
     public List<User> getUsers() {
+        LOGGER.debug("getUsers()");
         return jdbcTemplate.query(SELECT_ALL_USERS_SQL, new UserMapper());
     }
 
     @Override
     public User getUserById(Long id) {
+        LOGGER.debug("getUserById(UserId={})",id);
         return jdbcTemplate.queryForObject(SELECT_USER_BY_ID_SQL,
                 new Object[]{id},new UserMapper());
     }
 
     @Override
     public User getUserByLogin(String login) {
+        LOGGER.debug("getUserByLogin(UserLogin={})",login);
         return jdbcTemplate.queryForObject(SELECT_USER_BY_LOGIN_SQL,
                 new Object[]{login},new UserMapper());
     }
     @Override
     public void removeUser(Long userId) {
+        LOGGER.debug("removeUser(UserId={})",userId);
         jdbcTemplate.update(DELETE_USER_BY_ID_SQL,userId);
     }
     @Override
     public void addUser(User user) {
+        LOGGER.debug("addUser({})",user);
         jdbcTemplate.update(ADD_USER_SQL,
                 user.getUserId(), user.getLogin(), user.getUserName());
     }
     @Override
     public void updateUser(User user) {
+        LOGGER.debug("updateUser({})",user);
         jdbcTemplate.update(UPDATE_USER_SQL,user.getUserName(),user.getLogin(),user.getUserId());
     }
 
