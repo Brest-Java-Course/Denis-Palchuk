@@ -37,12 +37,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByLogin(String login) {
+        LOGGER.debug("getUserByLogin({})",login);
         User user = null;
         Assert.notNull(login,"User login should be specified.");
         try {
             user = userDao.getUserByLogin(login);
         } catch (EmptyResultDataAccessException e) {
-            LOGGER.warn("User with login '{}' doesn't exist!", login);
+            LOGGER.error("User with login '{}' doesn't exist!", login);
         }
         return user;
     }
