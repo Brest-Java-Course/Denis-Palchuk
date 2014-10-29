@@ -13,7 +13,7 @@ import java.util.List;
  * Created by denis on 10/22/14.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/testApplicationContextSpring.xml"})
+@ContextConfiguration(locations = {"classpath:/spring-dao-tests.xml"})
 public class UserDaoImplTest {
     @Autowired
     private UserDao userDao;
@@ -36,18 +36,17 @@ public class UserDaoImplTest {
     }
     @Test
     public void addUser() {
-        List<User> users=userDao.getUsers();
-        int sizeBefore=users.size();
+        List<User> users = userDao.getUsers();
+        int sizeBefore = users.size();
         User user = new User();
+        user.setUserId(null);
         user.setLogin("userLogin3");
-        user.setUserId(3L);
         user.setUserName("userName3");
-
         userDao.addUser(user);
-
-        users=userDao.getUsers();
-        assertEquals(sizeBefore,users.size()-1);
+        users = userDao.getUsers();
+        assertEquals(sizeBefore, users.size() - 1);
     }
+//    TODO:debug test
 
     @Test
     public void removeUser() {
