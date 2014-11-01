@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.zip.DataFormatException;
+
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.assertSame;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertSame;
  * Created by denis on 10/27/14.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:/testServiceApplicationContextSpring-mock.xml"})
+@ContextConfiguration(locations = {"classpath*:/spring-service-tests.xml"})
 public class UserServiceImplMockTest {
 
     @Autowired

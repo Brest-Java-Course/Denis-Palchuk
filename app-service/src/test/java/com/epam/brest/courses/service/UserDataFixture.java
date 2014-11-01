@@ -8,7 +8,7 @@ import com.epam.brest.courses.domain.User;
 public class UserDataFixture {
 
     public static User getNewUser() {
-        User user =new User();
+        User user = new User();
         user.setUserName("name");
         user.setLogin("login");
         return user;
