@@ -34,42 +34,22 @@ public class UserServiceImplMockTest {
     @Test
     public void addUser() {
         User user = UserDataFixture.getNewUser();
-
         // предполагаем, что этот методы будут вызваны (порядок не важен)
         userDao.getUserByLogin(user.getLogin());
         expectLastCall().andReturn(null);
 
         userDao.addUser(user);
-        expectLastCall();
+        expectLastCall().andReturn(3L);
 
         // переключаем userDao в режим репликации
         replay(userDao);
 
-        userService.addUser(user);
+        Long id=userService.addUser(user);
 
         //проверка все ли методы выполнились
         verify(userDao);
     }
 
-    @Test
-    public void addUser2() {
-        User user = UserDataFixture.getNewUser();
-
-        userDao.getUserByLogin(user.getLogin());
-        expectLastCall().andReturn(null).times(2);
-
-        userDao.addUser(user);
-        expectLastCall().times(2);
-
-        // переключаем userDao в режим репликации
-        replay(userDao);
-
-        userService.addUser(user);
-        userService.addUser(user);
-
-        //проверка все ли методы выполнились
-        verify(userDao);
-    }
 
     @Test(expected = IllegalArgumentException.class)
     public void addUserWithSameLogin() {

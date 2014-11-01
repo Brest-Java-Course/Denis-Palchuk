@@ -8,7 +8,7 @@ import java.util.List;
  * Created by denis on 10/25/14.
  */
 public interface UserService {
-    public void addUser(User user);
+    public Long addUser(User user);
 
     public User getUserByLogin(String login);
 

@@ -10,15 +10,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.*;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.util.Assert;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class UserDaoImpl implements UserDao {
@@ -43,6 +43,7 @@ public class UserDaoImpl implements UserDao {
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedJdbcTemplate;
+    private KeyHolder keyHolder = new GeneratedKeyHolder();
     private static final Logger LOGGER = LogManager.getLogger();
     public void setDataSource(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -74,17 +75,16 @@ public class UserDaoImpl implements UserDao {
         jdbcTemplate.update(DELETE_USER_BY_ID_SQL,userId);
     }
     @Override
-    public void addUser(User user) {
+    public Long addUser(User user) {
         LOGGER.debug("addUser({}) ", user);
         Assert.notNull(user);
-        Assert.isNull(user.getUserId());
         Assert.notNull(user.getLogin(), "User login should be specified.");
         Assert.notNull(user.getUserName(), "User name should be specified.");
-        Map<String, Object> parameters = new HashMap(3);
-        parameters.put(NAME, user.getUserName());
-        parameters.put(LOGIN, user.getLogin());
-        parameters.put(USER_ID, user.getUserId());
-        namedJdbcTemplate.update(addUserSql, parameters);
+        SqlParameterSource parameterSource= new BeanPropertySqlParameterSource(user);
+        namedJdbcTemplate.update(addUserSql, parameterSource,keyHolder);
+        Long id=keyHolder.getKey().longValue();
+        LOGGER.debug("Id User = {}",id);
+        return id;
     }
     @Override
     public void updateUser(User user) {

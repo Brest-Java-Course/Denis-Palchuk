@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(User user) {
+    public Long addUser(User user) {
         Assert.notNull(user);
         Assert.isNull(user.getUserId());
         Assert.notNull(user.getLogin(), ERROR_USER_LOGIN_SHOULD_BE_SPECIFIED);
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
             LOGGER.warn(ERROR_USER_IS_PRESENT_IN_DB);
             throw new IllegalArgumentException(ERROR_USER_IS_PRESENT_IN_DB);
         }
-        userDao.addUser(user);
+        return userDao.addUser(user);
     }
 
     @Override
