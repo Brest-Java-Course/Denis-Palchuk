@@ -10,11 +10,13 @@
         <module>app-core</module>
         <module>app-dao</module>
         <module>app-service</module>
+        <module>app-rest</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>4.1.1.RELEASE</org.springframework.version>
+        <jackson.databind-version>2.4.3</jackson.databind-version>
     </properties>
 
     <dependencyManagement>
@@ -27,6 +29,16 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>app-dao</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>app-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>app-rest</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -48,6 +60,31 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-jdbc</artifactId>
                 <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.databind-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.databind-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>3.1.0</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
@@ -77,6 +114,12 @@
                 <groupId>org.easymock</groupId>
                 <artifactId>easymock</artifactId>
                 <version>3.2</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>3.1.0</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
