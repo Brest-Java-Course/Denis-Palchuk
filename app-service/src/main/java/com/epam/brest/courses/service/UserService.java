@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface UserService {
     public Long addUser(User user);
-
+    public User getUserById(Long id);
     public User getUserByLogin(String login);
 
     public void deleteUser(Long id);

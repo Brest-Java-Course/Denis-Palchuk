@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
     public static final String ERROR_USER_WITH_THIS_ID_DOESN_T_EXIST = "User with this id doesn't exist!";
     public static final String ERROR_USER_CANT_USE_ADMIN_AS_LOGIN = "User can't use 'admin' as login";
     public static final String ERROR_ADMINS_NAME_CANT_BE_CHANGED = "Admin's name can't be changed";
+    public static final String USER_WITH_THIS_ID_DOESNT_EXIST = "User with this id doesn't exist";
     private UserDao userDao;
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -55,6 +56,17 @@ public class UserServiceImpl implements UserService {
             user = userDao.getUserByLogin(login);
         } catch (EmptyResultDataAccessException e) {
             LOGGER.error(USER_WITH_LOGIN_DOESN_T_EXIST, login);
+        }
+        return user;
+    }
+    @Override
+    public User getUserById(Long id) {
+        User user=null;
+        Assert.notNull(id,ERROR_USER_ID_CANT_BE_NULL);
+        try {
+            user=userDao.getUserById(id);
+        } catch (EmptyResultDataAccessException e) {
+            LOGGER.error(USER_WITH_THIS_ID_DOESNT_EXIST);
         }
         return user;
     }

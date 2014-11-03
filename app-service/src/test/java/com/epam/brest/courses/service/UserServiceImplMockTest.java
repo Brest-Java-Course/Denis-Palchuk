@@ -38,13 +38,13 @@ public class UserServiceImplMockTest {
         userDao.getUserByLogin(user.getLogin());
         expectLastCall().andReturn(null);
 
-        userDao.addUser(user);
+        Long id=userDao.addUser(user);
         expectLastCall().andReturn(3L);
 
         // переключаем userDao в режим репликации
         replay(userDao);
 
-        Long id=userService.addUser(user);
+        userService.addUser(user);
 
         //проверка все ли методы выполнились
         verify(userDao);
