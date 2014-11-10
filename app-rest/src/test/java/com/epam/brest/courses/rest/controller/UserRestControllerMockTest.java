@@ -3,8 +3,10 @@ package com.epam.brest.courses.rest.controller;
 import com.epam.brest.courses.domain.User;
 import com.epam.brest.courses.rest.UserRestController;
 import com.epam.brest.courses.rest.VersionRestController;
+import com.epam.brest.courses.rest.exception.NotFoundException;
 import com.epam.brest.courses.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,14 +16,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import javax.annotation.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,21 +54,19 @@ public class UserRestControllerMockTest {
         this.mockMvc = standaloneSetup(userRestController)
                 .setMessageConverters(new MappingJackson2HttpMessageConverter()).build();
 
-        expect(userService.getAllUsers()).
-                andReturn(UserDataFixture.getSampleUserList());
         //expect(userService.getUserById());
-// expect(userService.addUser(UserDataFixture.getNewUser())).
-//                andReturn(1L);
-        replay(userService);
-
     }
+
+    @After
+    public void tearDown() throws Exception {
+        reset(userService);
+    }
+
     @Test
-    public void testSuite() throws Exception {
-        getUsersTest();
-//        addUserTest();
-    }
-
     public void addUserTest() throws Exception {
+        expect(userService.addUser(anyObject(User.class))).
+                andReturn(1L);
+        replay(userService);
         ObjectMapper objectMapper = new ObjectMapper();
         String userJson = objectMapper.writeValueAsString(UserDataFixture.getNewUser());
         this.mockMvc.perform(
@@ -76,9 +76,83 @@ public class UserRestControllerMockTest {
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(content().string("1"));
+        verify(userService);
     }
+
+
+    @Test
+    public void getUserNotFoundTest() throws Exception {
+        expect(userService.getUserById(5L)).andThrow(new NotFoundException("User not found for id=", "5"));
+        replay(userService);
+        this.mockMvc.perform(get("/users/5")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+        verify(userService);
+    }
+
+    @Test
+    public void getUserByLoginRestTest() throws Exception {
+        expect(userService.getUserByLogin("user2")).andReturn(UserDataFixture.getExistUser(2L));
+        replay(userService);
+        this.mockMvc.perform(get("/users/login/user2")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("{\"userId\":2,\"login\":\"login\",\"userName\":\"name\"}"));
+        verify(userService);
+    }
+
+    @Test
+    public void getUserByIdTest() throws Exception {
+        expect(userService.getUserById(1L)).andReturn(UserDataFixture.getExistUser(1L));
+        replay(userService);
+        this.mockMvc.perform(
+                get("/users/1")
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("{\"userId\":1,\"login\":\"login\",\"userName\":\"name\"}"));
+        verify(userService);
+    }
+
+    @Test
+    public void updateUserTest() throws Exception {
+        userService.updateUser(anyObject(User.class));
+        replay(userService);
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = UserDataFixture.getExistUser(1L);
+        user.setUserName("modified");
+        String userJson = objectMapper.writeValueAsString(user);
+        ResultActions result = this.mockMvc.perform(
+                put("/users")
+                        .content(userJson)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andDo(print());
+        result.andExpect(status().isOk());
+        verify(userService);
+    }
+
+    @Test
+    public void deleteUserTest() throws Exception {
+        userService.deleteUser(Long.valueOf(1L));
+        replay(userService);
+        ResultActions result = this.mockMvc.perform(
+                delete("/users/1"))
+                .andDo(print());
+        result.andExpect(status().isOk());
+        verify(userService);
+    }
+
+    @Test
     public void getUsersTest() throws Exception {
+        expect(userService.getAllUsers()).
+                andReturn(UserDataFixture.getSampleUserList());
+        replay(userService);
         this.mockMvc.perform(
                 get("/users")
                         .accept(MediaType.APPLICATION_JSON)
