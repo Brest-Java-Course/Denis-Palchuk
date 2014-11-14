@@ -2,36 +2,56 @@ package com.epam.brest.courses.web;
 
 import com.epam.brest.courses.domain.User;
 import com.epam.brest.courses.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 /**
- * Created by denis on 11/10/14.
+ * Created by mentee-42 on 10.11.14.
  */
 @Controller
-@RequestMapping("/mvc")
 public class UserController {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = {"/"})
-    public ModelAndView launchInputForm() {
-        ModelAndView view= new ModelAndView("inputForm","user",new User());
-        return view;
+    @RequestMapping("/")
+    public String init() {
+        return "redirect:/usersList";
     }
 
-    @RequestMapping(value = {"/submitdata"})
-    public ModelAndView getInputForm(@RequestParam("name")String userName,@RequestParam("login")String userLogin) {
-        User user=new User();
-        user.setUserName(userName);
-        user.setLogin(userLogin);
-        Long id=userService.addUser(user);
-        user.setUserId(id);
-        ModelAndView view= new ModelAndView("displayResult","user",user);
-        return view;
+    @RequestMapping("/inputForm")
+    public ModelAndView launchInputForm() {
+      return new ModelAndView("inputForm", "user", new User());
     }
+
+    @RequestMapping("/submitData")
+    public String getInputForm(@RequestParam("login")String login, @RequestParam("name")String userName) {
+        User user = new User();
+        user.setLogin(login);
+        user.setUserName(userName);
+        userService.addUser(user);
+        return "redirect:/usersList";
+    }
+    @RequestMapping("/deleteData")
+    public String deleteUser(@RequestParam("userId")Long userId) {
+        userService.deleteUser(userId);
+        return "redirect:/usersList";
+    }
+    @RequestMapping("/usersList")
+    public ModelAndView getListUsersView() {
+      List<User> users = userService.getAllUsers();
+      LOGGER.debug("users.size = " + users.size());
+      ModelAndView view = new ModelAndView("usersList", "users", users);
+      return view;
+    }
+
 }

@@ -27,8 +27,8 @@ public class UserDaoImpl implements UserDao {
     public static final String SELECT_USER_BY_ID_SQL = "select userid, login, name from USER where userid = ?";
     public static final String SELECT_USER_BY_LOGIN_SQL = "select userid, login, name from USER where login = ?";
     public static final String DELETE_USER_BY_ID_SQL = "delete from USER where userid = ?";
-    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${insert_into_user_path}')).inputStream)}")
-    public String addUserSql;
+    //@Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${insert_into_user_path}')).inputStream)}")
+    public static final String addUserSql="insert into USER (userid, login,name) values (:userId, :login, :userName)";
     public static final String USER_ID = "userid";
     public static final String NAME = "name";
     public static final String LOGIN = "login";
