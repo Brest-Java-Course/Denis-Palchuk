@@ -15,10 +15,10 @@ $('#btnAdd').click(function () {
     return false;
 });
 
+$('#btnRemove').click(function () {
+    removeUser($('#userId').val());
+});
 $('#userList').on('click', 'a', function () {
-    if ($('a').hasClass("delete"))
-        deleteUser($(this).data('identity'));
-    else
         findById($(this).data('identity'));
 });
 
@@ -54,7 +54,6 @@ function updateUser() {
         type: 'PUT',
         contentType: 'application/json',
         url: REST_URL ,
-        dataType: "json",
         data: formToJSON(),
         success: function (data, textStatus, jqXHR) {
             alert('User updated successfully');
@@ -102,8 +101,7 @@ function renderList(data) {
     var list = data == null ? [] : (data instanceof Array ? data : [data]);
     $('#userList li').remove();
     $.each(list, function (index, user) {
-        $('#userList').append('<li><a href="#" class="getUser" data-identity="' + user.userId + '">' + user.login + "  "+ user.userName + '</a></li>'
-        + '<a href="#" class="delete" data-identity="' + user.userId + '">DeleteIt');
+        $('#userList').append('<li><a href="#" class="getUser" data-identity="' + user.userId + '">' + user.login + "  "+ user.userName + '</a></li>');
     });
 }
 
@@ -116,6 +114,12 @@ function renderDetails(user) {
     $('#userId').val(user.userId);
     $('#login').val(user.login);
     $('#name').val(user.userName);
+    if (user.userId == undefined) {
+        $('#btnRemove').hide();
+    }
+    else {
+        $('#btnRemove').show();
+    }
 }
 
 function search(searchKey) {
@@ -167,18 +171,21 @@ function formToJSON() {
         "userName": $('#name').val()
     });
 }
-function deleteUser(id) {
-console.log('deleteuser: ' + id);
+function removeUser(id) {
+console.log('removeUser: ' + id);
     $.ajax({
         type: 'DELETE',
         url: REST_URL + '/' + id,
         success: function () {
-            console.log('delete success');
+            console.log('Removed successfully');
             findAll();
+            currentUser = {};
+            renderDetails(currentUser);
+
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
-            alert('deleteUser: ' + textStatus);
+            alert('removeUser: ' + textStatus);
         }
     });
 
