@@ -1,6 +1,7 @@
 package com.epam.brest.courses.client;
 
 
+import com.epam.brest.courses.domain.User;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -43,5 +44,18 @@ public class RestClient {
 
         LOGGER.debug("getRestVesrsion {}", host);
         return restTemplate.getForObject(host + "/version", String.class);
+    }
+
+    public Long addUser(User user) {
+        LOGGER.debug("adduser {}", user);
+        return restTemplate.postForObject(host+ "/users",user,Long.class);
+    }
+    public User getUserById(Long id) {
+        LOGGER.debug("getUserById {}", id);
+        return  restTemplate.getForObject(host+"/users/"+id,User.class);
+    }
+    public void removeUser(Long id) {
+        LOGGER.debug("removeUser {}",id);
+        restTemplate.delete(host+"/users"+id);
     }
 }
