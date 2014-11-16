@@ -1,1 +1,0 @@
-update user set name = ?, login = ? where userid = ?

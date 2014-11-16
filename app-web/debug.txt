@@ -1,4 +1,0 @@
-export CATALINA_OPTS="-agentlib:jdwp=transport=dt_socket,address=1043,server=y,suspend=n"
-
-curl -v -H "Content-Type: application/json" -X POST -d '{"login":"login","name":"name"}' http://localhost:8090/app-web-1.0.0-SNAPSHOT/service/users
-curl -v -H "Content-Type: application/json" http://localhost:8090/app-web-1.0.0-SNAPSHOT/service/users/login/login

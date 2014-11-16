@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app-core/app-core.iml" filepath="$PROJECT_DIR$/app-core/app-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app-dao/app-dao.iml" filepath="$PROJECT_DIR$/app-dao/app-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app-rest/app-rest.iml" filepath="$PROJECT_DIR$/app-rest/app-rest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app-service/app-service.iml" filepath="$PROJECT_DIR$/app-service/app-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app-web/app-web.iml" filepath="$PROJECT_DIR$/app-web/app-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sampleusermanagement.iml" filepath="$PROJECT_DIR$/sampleusermanagement.iml" />
+    </modules>
+  </component>
+</project>
+
