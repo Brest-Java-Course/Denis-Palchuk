@@ -7,18 +7,18 @@ import org.joda.time.DateTime;
  */
 public class Message {
     Long messageId;
-    Long messageFromId;
-    Long messageToId;
+    Long messageFromUserId;
+    Long messageToUserId;
     String messageText;
     DateTime messageDateTime;
 
     public Message() {
 
     }
-    public Message(Long messageId, Long messageFromId, Long messageToId, String messageText, DateTime messageDateTime) {
+    public Message(Long messageId, Long messageFromUserId, Long messageToUserId, String messageText, DateTime messageDateTime) {
         this.messageId = messageId;
-        this.messageFromId = messageFromId;
-        this.messageToId = messageToId;
+        this.messageFromUserId = messageFromUserId;
+        this.messageToUserId = messageToUserId;
         this.messageText = messageText;
         this.messageDateTime = messageDateTime;
     }
@@ -31,20 +31,20 @@ public class Message {
         this.messageId = messageId;
     }
 
-    public Long getMessageFromId() {
-        return messageFromId;
+    public Long getMessageFromUserId() {
+        return messageFromUserId;
     }
 
-    public void setMessageFromId(Long messageFromId) {
-        this.messageFromId = messageFromId;
+    public void setMessageFromUserId(Long messageFromUserId) {
+        this.messageFromUserId = messageFromUserId;
     }
 
-    public Long getMessageToId() {
-        return messageToId;
+    public Long getMessageToUserId() {
+        return messageToUserId;
     }
 
-    public void setMessageToId(Long messageToId) {
-        this.messageToId = messageToId;
+    public void setMessageToUserId(Long messageToUserId) {
+        this.messageToUserId = messageToUserId;
     }
 
     public String getMessageText() {
@@ -72,11 +72,11 @@ public class Message {
 
         if (messageDateTime != null ? !messageDateTime.equals(message.messageDateTime) : message.messageDateTime != null)
             return false;
-        if (messageFromId != null ? !messageFromId.equals(message.messageFromId) : message.messageFromId != null)
+        if (messageFromUserId != null ? !messageFromUserId.equals(message.messageFromUserId) : message.messageFromUserId != null)
             return false;
         if (messageId != null ? !messageId.equals(message.messageId) : message.messageId != null) return false;
         if (messageText != null ? !messageText.equals(message.messageText) : message.messageText != null) return false;
-        if (messageToId != null ? !messageToId.equals(message.messageToId) : message.messageToId != null) return false;
+        if (messageToUserId != null ? !messageToUserId.equals(message.messageToUserId) : message.messageToUserId != null) return false;
 
         return true;
     }
@@ -84,8 +84,8 @@ public class Message {
     public String toString() {
         return "Message{" +
                 "messageId=" + messageId +
-                ", messageFromId=" + messageFromId +
-                ", messageToId=" + messageToId +
+                ", messageFromUserId=" + messageFromUserId +
+                ", messageToUserId=" + messageToUserId +
                 ", messageText='" + messageText + '\'' +
                 ", messageDateTime=" + messageDateTime +
                 '}';
