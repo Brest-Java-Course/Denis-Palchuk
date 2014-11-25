@@ -7,8 +7,8 @@ userAge INT NOT NULL
 
 CREATE TABLE MESSAGE (
 messageId BIGINT IDENTITY,
-messageFromId BIGINT NOT NULL,
-messageToId BIGINT NOT NULL,
+messageFromUserId BIGINT NOT NULL,
+messageToUserId BIGINT NOT NULL,
 messageText VARCHAR(255) NOT NULL,
 messageDateTime TIMESTAMP
 )

@@ -50,7 +50,7 @@ public class UserDaoImplTest {
     @Test
     public void getAverageAgeUsersWhoMessagedWithUserTest() {
         Integer integer=userDao.getAverageAgeUsersWhoMessagedWithUser(1L);
-        assertEquals(3,integer.intValue());
+        assertEquals(19,integer.intValue());
     }
 
     @Test

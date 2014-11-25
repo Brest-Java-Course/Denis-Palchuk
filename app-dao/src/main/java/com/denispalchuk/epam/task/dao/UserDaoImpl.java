@@ -94,12 +94,7 @@ public class UserDaoImpl implements UserDao{
     public Integer getAverageAgeUsersWhoMessagedWithUser(Long userId) {
         Map<String, Object> parameters = new HashMap(1);
         parameters.put("userId", userId);
-        List<Integer> usersAges=namedParameterJdbcTemplate.query("select userAge from USER where userId in (select distinct messageFromId from MESSAGE where messageToId = :userId)",parameters,new IntegerMapper());
-        int sumAges=0;
-        for(Integer userAge:usersAges) {
-            sumAges+=userAge;
-        }
-        return (int)(((double)sumAges/usersAges.size())+0.5);
+        return namedParameterJdbcTemplate.queryForObject("select avg(userAge) from USER where userId in (select distinct messageFromUserId from MESSAGE where messageToUserId = :userId)", parameters,Integer.class);
     }
 
     @Override
@@ -107,7 +102,7 @@ public class UserDaoImpl implements UserDao{
         LOGGER.debug("get all messages by user id {}",userId);
         Map<String, Object> parameters = new HashMap(1);
         parameters.put("userId", userId);
-        return namedParameterJdbcTemplate.query("select messageId, messageFromId, messageToId, messageText, messageDateTime from MESSAGE where messageToid = :userId",
+        return namedParameterJdbcTemplate.query("select messageId, messageFromUserId, messageToUserId, messageText, messageDateTime from MESSAGE where messageToUserId = :userId",
                 parameters, new MessageMapper());
     }
 
@@ -124,22 +119,24 @@ public class UserDaoImpl implements UserDao{
             return user;
         }
     }
-    public class IntegerMapper implements RowMapper<Integer> {
-        @Override
-        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-            return resultSet.getInt("userAge");
-        }
-    }
 
     public class MessageMapper implements RowMapper<Message> {
         @Override
         public Message mapRow(ResultSet resultSet, int i) throws SQLException {
             Message message = new Message();
             message.setMessageDateTime(new DateTime(resultSet.getDate("messageDateTime")));
-            message.setMessageFromId((resultSet.getLong("messageFromId")));
-            message.setMessageToId(resultSet.getLong("messageToId"));
+            message.setMessageFromUserId((resultSet.getLong("messageFromUserId")));
+            message.setMessageToUserId(resultSet.getLong("messageToUserId"));
             message.setMessageText(resultSet.getString("messageText"));
             return message;
+        }
+    }
+
+    public class IntegerMapper implements RowMapper<Integer> {
+        @Override
+        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+            Integer integer= new Integer(resultSet.getInt("avg(userAge)"));
+            return integer;
         }
     }
 }

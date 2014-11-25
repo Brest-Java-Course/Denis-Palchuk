@@ -40,7 +40,7 @@ public class MessageDaoImpl implements MessageDao {
     public Long addMessage(Message message) {
         LOGGER.debug("add Message {}",message);
         SqlParameterSource parameterSource= new BeanPropertySqlParameterSource(message);
-        namedParameterJdbcTemplate.update("insert into MESSAGE (messageId, messageFromId, messageToId, messageText, messageDateTime) values (:messageId, :messageFromId, :messageToId, :messageText, :messageDateTime)",
+        namedParameterJdbcTemplate.update("insert into MESSAGE (messageId, messageFromUserId, messageToUserId, messageText, messageDateTime) values (:messageId, :messageFromUserId, :messageToUserId, :messageText, :messageDateTime)",
                 parameterSource,keyHolder);
         return keyHolder.getKey().longValue();
     }
@@ -50,7 +50,7 @@ public class MessageDaoImpl implements MessageDao {
         LOGGER.debug("get Message by Id {}",messageId);
         Map<String, Object> parameters = new HashMap(1);
         parameters.put("messageId", messageId);
-        return namedParameterJdbcTemplate.queryForObject("select messageId, messageFromId, messageToId, messageText, messageDateTime from MESSAGE where messageId = :messageId",
+        return namedParameterJdbcTemplate.queryForObject("select messageId, messageFromUserId, messageToUserId, messageText, messageDateTime from MESSAGE where messageId = :messageId",
                 parameters,new MessageMapper());
     }
 
@@ -65,7 +65,7 @@ public class MessageDaoImpl implements MessageDao {
     @Override
     public List<Message> getAllMessages() {
         LOGGER.debug("get all users()");
-        return namedParameterJdbcTemplate.query("select messageId, messageFromId, messageToId, messageText, messageDateTime from MESSAGE",new MessageMapper());
+        return namedParameterJdbcTemplate.query("select messageId, messageFromUserId, messageToUserId, messageText, messageDateTime from MESSAGE",new MessageMapper());
     }
 
     @Override
@@ -74,10 +74,10 @@ public class MessageDaoImpl implements MessageDao {
         Map<String, Object> parameters = new HashMap(2);
         parameters.put("messageDateTime",new Timestamp(message.getMessageDateTime().getMillis()));
         parameters.put("messageId",message.getMessageId());
-        parameters.put("messageFromId", message.getMessageFromId());
-        parameters.put("messageToId",message.getMessageToId());
+        parameters.put("messageFromUserId", message.getMessageFromUserId());
+        parameters.put("messageToUserId",message.getMessageToUserId());
         parameters.put("messageText",message.getMessageText());
-        namedParameterJdbcTemplate.update("update MESSAGE set messageFromId = :messageFromId, messageToid = :messageToId, messageText = :messageText, messageDateTime = :messageDateTime where messageId = :messageId",
+        namedParameterJdbcTemplate.update("update MESSAGE set messageFromUserId = :messageFromUserId, messageToUserId = :messageToUserId, messageText = :messageText, messageDateTime = :messageDateTime where messageId = :messageId",
                 parameters);
     }
 
@@ -87,7 +87,7 @@ public class MessageDaoImpl implements MessageDao {
         Map<String, Object> parameters = new HashMap(2);
         parameters.put("startDateTime", new Timestamp(startDateTime.getMillis()));
         parameters.put("finishDateTime", new Timestamp(finishDateTime.getMillis()));
-        return namedParameterJdbcTemplate.query("select messageId, messageFromId, messageToId, messageText, messageDateTime from MESSAGE where messageDateTime between :startDateTime and :finishDateTime",
+        return namedParameterJdbcTemplate.query("select messageId, messageFromUserId, messageToUserId, messageText, messageDateTime from MESSAGE where messageDateTime between :startDateTime and :finishDateTime",
                 parameters, new MessageMapper());
     }
 
@@ -97,8 +97,8 @@ public class MessageDaoImpl implements MessageDao {
             Message message = new Message();
             message.setMessageId(resultSet.getLong("messageId"));
             message.setMessageDateTime(new DateTime(resultSet.getTimestamp("messageDateTime")));
-            message.setMessageFromId((resultSet.getLong("messageFromId")));
-            message.setMessageToId(resultSet.getLong("messageToId"));
+            message.setMessageFromUserId((resultSet.getLong("messageFromUserId")));
+            message.setMessageToUserId(resultSet.getLong("messageToUserId"));
             message.setMessageText(resultSet.getString("messageText"));
             return message;
         }
