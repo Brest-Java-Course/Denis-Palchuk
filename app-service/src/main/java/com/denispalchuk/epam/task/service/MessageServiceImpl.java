@@ -30,11 +30,11 @@ public class MessageServiceImpl implements MessageService {
 
         Assert.isNull(message.getMessageDateTime(), "message data should be null");
 
-        Assert.notNull(message.getMessageFromUserId(), "message FromUserId can't be null");
+        Assert.notNull(message.getMessageFromUserId(), "message fromUserId can't be null");
 
-        Assert.notNull(message.getMessageToUserId());
+        Assert.notNull(message.getMessageToUserId(),"message toUserId can't be null");
 
-        Assert.notNull(message.getMessageText());
+        Assert.notNull(message.getMessageText(),"message text can't be null");
         return messageDao.addMessage(message);
     }
 

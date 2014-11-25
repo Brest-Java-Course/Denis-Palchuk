@@ -15,5 +15,8 @@ http://www.springframework.org/schema/context/spring-context.xsd">
     <bean id="messageDao" class="org.easymock.EasyMock" factory-method="createMock">
         <constructor-arg value="com.denispalchuk.epam.task.dao.MessageDao"/>
     </bean>
+    <bean id="messageService" class="com.denispalchuk.epam.task.service.MessageServiceImpl">
+        <property name="messageDao" ref="messageDao"/>
+    </bean>
     <context:component-scan base-package="com.denispalchuk.epam.task.service"/>
 </beans>

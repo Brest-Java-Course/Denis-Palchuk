@@ -81,8 +81,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void removeUser(Long userId) {
         Assert.notNull(userId);
-        User existingUser=getUserById(userId);
-        if (existingUser == null) {
+        User existingUser=new User();
+        try {
+            existingUser = getUserById(userId);
+        } catch (EmptyResultDataAccessException ex) {
             LOGGER.error("user with id '{}' doesn't exist",userId);
             throw new IllegalArgumentException("user with this id doesn't exist");
         }
@@ -139,6 +141,7 @@ public class UserServiceImpl implements UserService {
             user=userDao.getUserById(userId);
         } catch (EmptyResultDataAccessException ex) {
             LOGGER.error("User with userId '{}' doesn't exist",userId);
+            throw new IllegalArgumentException("User with this id doesn't exist");
         }
         return userDao.getAverageAgeUsersWhoMessagedWithUser(userId);
     }
@@ -147,11 +150,19 @@ public class UserServiceImpl implements UserService {
     public List<Message> getAllMessageFromUser(Long userId) {
         Assert.notNull(userId,"userId can't be null");
         User user=new User();
+        List<Message> messages;
         try {
             user=userDao.getUserById(userId);
         } catch (EmptyResultDataAccessException ex) {
             LOGGER.error("User with userId '{}' doesn't exist",userId);
+            throw new IllegalArgumentException("User with this id doesn't exist");
         }
-        return userDao.getAllMessageFromUser(userId);
+        try {
+            messages=userDao.getAllMessageFromUser(userId);
+        } catch (EmptyResultDataAccessException ex) {
+            LOGGER.error("Empty list of messages with user with id {}",userId);
+            throw new IllegalArgumentException("Empty list of messages with this user");
+        }
+        return messages;
     }
 }
