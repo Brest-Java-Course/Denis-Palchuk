@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <import resource="classpath:spring-dao.xml"/>
+    <bean id="userService" class="com.denispalchuk.epam.task.service.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+    <bean id="messageService" class="com.denispalchuk.epam.task.service.MessageServiceImpl">
+        <property name="messageDao" ref="messageDao"/>
+    </bean>
+</beans>
