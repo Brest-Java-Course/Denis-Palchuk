@@ -44,15 +44,16 @@ public class UserRestController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "id/{id}/messages", method = RequestMethod.GET)
-    public ResponseEntity<List<Message>> getAllMessageFromUser(@PathVariable Long userId) {
+    @RequestMapping(value = "/messages/", method = RequestMethod.GET)
+    public ResponseEntity<List<Message>> getAllMessageFromUser(@RequestParam Long userId) {
         List messages = userService.getAllMessageFromUser(userId);
+
         return new ResponseEntity(messages, HttpStatus.OK);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/id/{id}/avAge", method = RequestMethod.GET)
-    public ResponseEntity<Integer> getAverageAgeUsersWhoMessagedWithUser(@PathVariable Long userId) {
+    @RequestMapping(value = "/avage", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getAverageAgeUsersWhoMessagedWithUser(@RequestParam Long userId) {
         Integer averageAge = userService.getAverageAgeUsersWhoMessagedWithUser(userId);
         return new ResponseEntity(averageAge, HttpStatus.OK);
     }

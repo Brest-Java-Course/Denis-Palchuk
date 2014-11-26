@@ -1,16 +1,21 @@
 package com.denispalchuk.epam.task.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.DateTime;
 
 /**
  * Created by denis on 11/15/14.
  */
 public class Message {
-    Long messageId;
-    Long messageFromUserId;
-    Long messageToUserId;
-    String messageText;
-    DateTime messageDateTime;
+    private Long messageId;
+    private Long messageFromUserId;
+    private Long messageToUserId;
+    private String messageText;
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    @JsonDeserialize(using = CustomDataDeserializer.class)
+    private DateTime messageDateTime;
 
     public Message() {
 

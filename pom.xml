@@ -132,6 +132,11 @@
                 <artifactId>joda-time</artifactId>
                 <version>2.5</version>
             </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-joda</artifactId>
+                <version>${jackson.databind-version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <reporting>

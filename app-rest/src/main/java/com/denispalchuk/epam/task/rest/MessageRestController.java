@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by denis on 11/26/14.
@@ -24,7 +25,7 @@ public class MessageRestController {
         this.messageService = messageService;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Message> getMessageById(@PathVariable Long id) {
         try {
@@ -66,8 +67,8 @@ public class MessageRestController {
 
     @RequestMapping(value = "/bytime", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<Message>> getMessagesByTimePeriod(@PathVariable DateTime startDateTime, @PathVariable DateTime finishDateTime) {
-        List messages = messageService.getAllMessagesByTimePeriod(startDateTime,finishDateTime);
+    public ResponseEntity<List<Message>> getMessagesByTimePeriod(@RequestBody Map<String,DateTime> params) {
+        List messages = messageService.getAllMessagesByTimePeriod(params.get("startDateTime"),params.get("finishDateTime"));
         return new ResponseEntity(messages, HttpStatus.OK);
     }
 }
