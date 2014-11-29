@@ -2,7 +2,7 @@ package com.denispalchuk.epam.task.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by denis on 11/15/14.
@@ -15,12 +15,12 @@ public class Message {
 
     @JsonSerialize(using = CustomDateSerializer.class)
     @JsonDeserialize(using = CustomDataDeserializer.class)
-    private DateTime messageDateTime;
+    private LocalDateTime messageDateTime;
 
     public Message() {
 
     }
-    public Message(Long messageId, Long messageFromUserId, Long messageToUserId, String messageText, DateTime messageDateTime) {
+    public Message(Long messageId, Long messageFromUserId, Long messageToUserId, String messageText, LocalDateTime messageDateTime) {
         this.messageId = messageId;
         this.messageFromUserId = messageFromUserId;
         this.messageToUserId = messageToUserId;
@@ -60,11 +60,11 @@ public class Message {
         this.messageText = messageText;
     }
 
-    public DateTime getMessageDateTime() {
+    public LocalDateTime getMessageDateTime() {
         return messageDateTime;
     }
 
-    public void setMessageDateTime(DateTime messageDateTime) {
+    public void setMessageDateTime(LocalDateTime messageDateTime) {
         this.messageDateTime = messageDateTime;
     }
 

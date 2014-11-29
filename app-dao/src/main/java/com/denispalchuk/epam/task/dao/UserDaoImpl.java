@@ -2,7 +2,7 @@ package com.denispalchuk.epam.task.dao;
 
 import com.denispalchuk.epam.task.domain.Message;
 import com.denispalchuk.epam.task.domain.User;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -126,7 +126,7 @@ public class UserDaoImpl implements UserDao{
         @Override
         public Message mapRow(ResultSet resultSet, int i) throws SQLException {
             Message message = new Message();
-            message.setMessageDateTime(new DateTime(resultSet.getDate("messageDateTime")));
+            message.setMessageDateTime(new LocalDateTime(resultSet.getDate("messageDateTime")));
             message.setMessageFromUserId((resultSet.getLong("messageFromUserId")));
             message.setMessageToUserId(resultSet.getLong("messageToUserId"));
             message.setMessageText(resultSet.getString("messageText"));

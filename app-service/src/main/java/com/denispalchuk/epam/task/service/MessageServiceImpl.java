@@ -4,7 +4,7 @@ import com.denispalchuk.epam.task.dao.MessageDao;
 import com.denispalchuk.epam.task.domain.Message;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.util.Assert;
 
@@ -83,10 +83,10 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> getAllMessagesByTimePeriod(DateTime startDateTime, DateTime finishDateTime) {
+    public List<Message> getAllMessagesByTimePeriod(LocalDateTime startDateTime, LocalDateTime finishDateTime) {
         Assert.notNull(startDateTime,"start date can't be null");
         Assert.notNull(finishDateTime,"finish date can't be null");
-        if (startDateTime.getMillis() > finishDateTime.getMillis()) {
+        if (startDateTime.toDateTime().getMillis() > finishDateTime.toDateTime().getMillis()) {
             LOGGER.error("wrong input Date from {}, to {}",startDateTime,finishDateTime);
             throw new IllegalArgumentException("wrong input Date range");
         }

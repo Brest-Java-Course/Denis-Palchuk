@@ -2,7 +2,7 @@ package com.denispalchuk.epam.task;
 
 import com.denispalchuk.epam.task.dao.MessageDao;
 import com.denispalchuk.epam.task.domain.Message;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +57,7 @@ public class MessageDaoImplTest {
 
     @Test
     public void updateMessageTest() {
-        Message message=new Message(new Long(1L),new Long(1L),new Long(2L),"testText",new DateTime(2005, 3, 26, 12, 0, 0, 0));
+        Message message=new Message(new Long(1L),new Long(1L),new Long(2L),"testText",new LocalDateTime(2005, 3, 26, 12, 0, 0, 0));
         messageDao.updateMessage(message);
         Message newMessage=messageDao.getMessageById(1L);
         assertEquals(message,newMessage);
@@ -65,7 +65,7 @@ public class MessageDaoImplTest {
 
     @Test
     public void getAllMessagesByTimePeriodTest() {
-        List<Message> messages=messageDao.getAllMessagesByTimePeriod(new DateTime(2014, 11, 22, 12, 0, 0, 0),new DateTime(2014, 11, 24, 12, 0, 0, 0));
+        List<Message> messages=messageDao.getAllMessagesByTimePeriod(new LocalDateTime(2014, 11, 22, 12, 0, 0, 0),new LocalDateTime(2014, 11, 24, 12, 0, 0, 0));
         assertEquals(3,messages.size());
     }
 }

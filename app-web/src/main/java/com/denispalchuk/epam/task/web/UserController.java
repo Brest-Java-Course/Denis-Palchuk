@@ -1,9 +1,13 @@
 package com.denispalchuk.epam.task.web;
 
+import com.denispalchuk.epam.task.domain.Message;
 import com.denispalchuk.epam.task.domain.User;
 import com.denispalchuk.epam.task.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -61,10 +66,12 @@ public class UserController {
     public ModelAndView launchUserForm(@PathVariable("id") Long userId) {
         User user=userService.getUserById(userId);
         Integer age=userService.getAverageAgeUsersWhoMessagedWithUser(userId);
+        List<Message> messages=userService.getAllMessageFromUser(userId);
         LOGGER.debug("getUserById {}",userId);
-        Map<String,Object> map= new HashMap<String, Object>();
-        map.put("user",user);
-        map.put("age",age);
-        return new ModelAndView("userForm","map",map);
+        ModelAndView modelAndView = new ModelAndView("userForm");
+        modelAndView.addObject("user",user);
+        modelAndView.addObject("age",age);
+        modelAndView.addObject("messages",messages);
+        return modelAndView;
     }
 }

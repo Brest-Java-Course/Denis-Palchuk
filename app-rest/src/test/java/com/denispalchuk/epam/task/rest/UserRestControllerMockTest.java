@@ -4,7 +4,7 @@ import com.denispalchuk.epam.task.domain.Message;
 import com.denispalchuk.epam.task.domain.User;
 import com.denispalchuk.epam.task.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -158,8 +158,8 @@ public class UserRestControllerMockTest {
     @Test
     public void getAllMessageFromUserTest() throws Exception {
         List<Message> messages = new ArrayList<Message>();
-        messages.add(new Message(1L,2L,3L,"Text1",new DateTime(2014, 11, 23, 12, 0, 0, 0)));
-        messages.add(new Message(2L,2L,3L,"Text2",new DateTime(2014, 11, 23, 13, 0, 0, 0)));
+        messages.add(new Message(1L,2L,3L,"Text1",new LocalDateTime(2014, 11, 23, 12, 0, 0, 0)));
+        messages.add(new Message(2L,2L,3L,"Text2",new LocalDateTime(2014, 11, 23, 13, 0, 0, 0)));
         userService.getAllMessageFromUser(1L);
         expectLastCall().andReturn(messages);
 
@@ -167,8 +167,8 @@ public class UserRestControllerMockTest {
         this.mockMvc.perform(get("/users/messages/").accept(MediaType.APPLICATION_JSON).param("userId","1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("[{\"messageId\":1,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"Text1\",\"messageDateTime\":\"2014-11-23T12:00:00.000+03:00\"}," +
-                        "{\"messageId\":2,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"Text2\",\"messageDateTime\":\"2014-11-23T13:00:00.000+03:00\"}]"));
+                .andExpect(content().string("[{\"messageId\":1,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"Text1\",\"messageDateTime\":\"2014-11-23 12:00:00\"}," +
+                        "{\"messageId\":2,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"Text2\",\"messageDateTime\":\"2014-11-23 13:00:00\"}]"));
     }
 
     @Test

@@ -2,7 +2,7 @@ package com.denispalchuk.epam.task.dao;
 
 import com.denispalchuk.epam.task.domain.Message;
 import com.denispalchuk.epam.task.domain.User;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import java.util.List;
 
@@ -21,5 +21,5 @@ public interface MessageDao {
 
     public List<Message> getAllMessages();
 
-    public List<Message> getAllMessagesByTimePeriod(DateTime startDateTime,DateTime finishDateTime);
+    public List<Message> getAllMessagesByTimePeriod(LocalDateTime startDateTime,LocalDateTime finishDateTime);
 }

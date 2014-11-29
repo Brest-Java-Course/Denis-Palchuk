@@ -1,7 +1,7 @@
 package com.denispalchuk.epam.task.service;
 
 import com.denispalchuk.epam.task.domain.Message;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import java.util.List;
 
@@ -19,5 +19,5 @@ public interface MessageService {
 
     public List<Message> getAllMessages();
 
-    public List<Message> getAllMessagesByTimePeriod(DateTime startDateTime,DateTime finishDateTime);
+    public List<Message> getAllMessagesByTimePeriod(LocalDateTime startDateTime,LocalDateTime finishDateTime);
 }

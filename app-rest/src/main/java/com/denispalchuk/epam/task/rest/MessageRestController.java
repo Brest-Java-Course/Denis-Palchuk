@@ -2,7 +2,7 @@ package com.denispalchuk.epam.task.rest;
 
 import com.denispalchuk.epam.task.domain.Message;
 import com.denispalchuk.epam.task.service.MessageService;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -67,7 +67,7 @@ public class MessageRestController {
 
     @RequestMapping(value = "/bytime", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<Message>> getMessagesByTimePeriod(@RequestBody Map<String,DateTime> params) {
+    public ResponseEntity<List<Message>> getMessagesByTimePeriod(@RequestBody Map<String,LocalDateTime> params) {
         List messages = messageService.getAllMessagesByTimePeriod(params.get("startDateTime"),params.get("finishDateTime"));
         return new ResponseEntity(messages, HttpStatus.OK);
     }

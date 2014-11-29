@@ -6,7 +6,7 @@ import com.denispalchuk.epam.task.service.MessageService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.ISODateTimeFormat;
 import org.junit.After;
@@ -61,7 +61,7 @@ public class MessageRestControllerMockTest {
 
     @Test
     public void getMessageByIdTest() throws Exception {
-        Message message = new Message(1L, 2L, 3L, "NewText", new DateTime(2014, 11, 23, 12, 0, 0, 0));
+        Message message = new Message(1L, 2L, 3L, "NewText", new LocalDateTime(2014, 11, 23, 12, 0, 0, 0));
         messageService.getMessageById(1L);
         expectLastCall().andReturn(message);
 
@@ -69,15 +69,15 @@ public class MessageRestControllerMockTest {
         this.mockMvc.perform(get("/messages/id/1").accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"messageId\":1,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"NewText\",\"messageDateTime\":\"2014-11-23T12:00:00.000+03:00\"}"));
+                .andExpect(content().string("{\"messageId\":1,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"NewText\",\"messageDateTime\":\"2014-11-23 12:00:00\"}"));
         verify(messageService);
     }
 
     @Test
     public void getMessagesTest() throws Exception {
         List<Message> messages = new ArrayList<Message>();
-        messages.add(new Message(1L, 2L, 3L, "NewText", new DateTime(2014, 11, 23, 12, 0, 0, 0)));
-        messages.add(new Message(1L, 2L, 3L, "NewText", new DateTime(2014, 11, 24, 12, 0, 0, 0)));
+        messages.add(new Message(1L, 2L, 3L, "NewText", new LocalDateTime(2014, 11, 23, 12, 0, 0, 0)));
+        messages.add(new Message(1L, 2L, 3L, "NewText", new LocalDateTime(2014, 11, 24, 12, 0, 0, 0)));
         messageService.getAllMessages();
         expectLastCall().andReturn(messages);
 
@@ -85,14 +85,14 @@ public class MessageRestControllerMockTest {
         this.mockMvc.perform(get("/messages").accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("[{\"messageId\":1,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"NewText\",\"messageDateTime\":\"2014-11-23T12:00:00.000+03:00\"}," +
-                        "{\"messageId\":1,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"NewText\",\"messageDateTime\":\"2014-11-24T12:00:00.000+03:00\"}]"));
+                .andExpect(content().string("[{\"messageId\":1,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"NewText\",\"messageDateTime\":\"2014-11-23 12:00:00\"}," +
+                        "{\"messageId\":1,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"NewText\",\"messageDateTime\":\"2014-11-24 12:00:00\"}]"));
         verify(messageService);
     }
 
     @Test
     public void updateMessageTest() throws Exception {
-        Message message = new Message(1L, 2L, 3L, "NewText", new DateTime(2014, 11, 24, 12, 0, 0, 0));
+        Message message = new Message(1L, 2L, 3L, "NewText", new LocalDateTime(2014, 11, 24, 12, 0, 0, 0));
         messageService.updateMessage(message);
         expectLastCall();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -144,17 +144,17 @@ public class MessageRestControllerMockTest {
     @Test
     public void getMessageByTimePeriodTest() throws Exception {
         List<Message> messages = new ArrayList<Message>();
-        DateTime startDateTime = new DateTime(2014, 11, 24, 12, 0, 0, 0);
-        DateTime finishDateTime = new DateTime(2014, 12, 24, 12, 0, 0, 0);
-        messages.add(new Message(1L, 2L, 3L, "NewText", new DateTime(2014, 11, 25, 12, 12, 30, 0)));
-        messages.add(new Message(2L, 2L, 3L, "NewText", new DateTime(2014, 11, 26, 12, 12, 30, 0)));
+        LocalDateTime startDateTime = new LocalDateTime(2014, 11, 24, 12, 0, 0, 0);
+        LocalDateTime finishDateTime = new LocalDateTime(2014, 12, 24, 12, 0, 0, 0);
+        messages.add(new Message(1L, 2L, 3L, "NewText", new LocalDateTime(2014, 11, 25, 12, 12, 30, 0)));
+        messages.add(new Message(2L, 2L, 3L, "NewText", new LocalDateTime(2014, 11, 26, 12, 12, 30, 0)));
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JodaModule());
-        Map<String,DateTime> params= new HashMap<String,DateTime>();
+        Map<String,LocalDateTime> params= new HashMap<String,LocalDateTime>();
         params.put("startDateTime",startDateTime);
         params.put("finishDateTime",finishDateTime);
         String dateTimeJson=objectMapper.writeValueAsString(params);
-        messageService.getAllMessagesByTimePeriod(startDateTime.toDateTime(DateTimeZone.UTC), finishDateTime.toDateTime(DateTimeZone.UTC));
+        messageService.getAllMessagesByTimePeriod(startDateTime, finishDateTime);
         expectLastCall().andReturn(messages);
         replay(messageService);
         this.mockMvc.perform(get("/messages/bytime")
@@ -163,7 +163,7 @@ public class MessageRestControllerMockTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("[{\"messageId\":1,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"NewText\",\"messageDateTime\":\"2014-11-25T12:12:30.000+03:00\"}," +
-                        "{\"messageId\":2,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"NewText\",\"messageDateTime\":\"2014-11-26T12:12:30.000+03:00\"}]"));
+                .andExpect(content().string("[{\"messageId\":1,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"NewText\",\"messageDateTime\":\"2014-11-25 12:12:30\"}," +
+                        "{\"messageId\":2,\"messageFromUserId\":2,\"messageToUserId\":3,\"messageText\":\"NewText\",\"messageDateTime\":\"2014-11-26 12:12:30\"}]"));
     }
 }

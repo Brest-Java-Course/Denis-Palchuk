@@ -2,7 +2,7 @@ package com.denispalchuk.epam.task.service;
 
 import com.denispalchuk.epam.task.dao.MessageDao;
 import com.denispalchuk.epam.task.domain.Message;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +52,7 @@ public class messageServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void addMessageWithNotNullDateTimeTest() {
-        Message message = new Message(null, null, 3L, "NewMessage", new DateTime(2014, 11, 22, 12, 0, 0, 0));
+        Message message = new Message(null, null, 3L, "NewMessage", new LocalDateTime(2014, 11, 22, 12, 0, 0, 0));
         messageService.addMessage(message);
     }
 
@@ -129,7 +129,7 @@ public class messageServiceMockTest {
 
     @Test
     public void updateMessageTest() {
-        Message message = new Message(1L, 2L, 3L, "NewMessage", new DateTime(2014, 11, 22, 12, 0, 0, 0));
+        Message message = new Message(1L, 2L, 3L, "NewMessage", new LocalDateTime(2014, 11, 22, 12, 0, 0, 0));
         messageDao.updateMessage(message);
         expectLastCall();
 
@@ -140,7 +140,7 @@ public class messageServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateMessageWithNullIdTest() {
-        Message message = new Message(null, 2L, 3L, "NewMessage", new DateTime(2014, 11, 22, 12, 0, 0, 0));
+        Message message = new Message(null, 2L, 3L, "NewMessage", new LocalDateTime(2014, 11, 22, 12, 0, 0, 0));
         messageService.updateMessage(message);
     }
 
@@ -152,19 +152,19 @@ public class messageServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateMessageWithNullFromUserIdTest() {
-        Message message = new Message(1L, null, 3L, "NewMessage", new DateTime(2014, 11, 22, 12, 0, 0, 0));
+        Message message = new Message(1L, null, 3L, "NewMessage", new LocalDateTime(2014, 11, 22, 12, 0, 0, 0));
         messageService.updateMessage(message);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void updateMessageWithNullToUserIdTest() {
-        Message message = new Message(1L, 2L, null, "NewMessage", new DateTime(2014, 11, 22, 12, 0, 0, 0));
+        Message message = new Message(1L, 2L, null, "NewMessage", new LocalDateTime(2014, 11, 22, 12, 0, 0, 0));
         messageService.updateMessage(message);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void updateMessageWithNullTextTest() {
-        Message message = new Message(1L, 2L, 3L, null, new DateTime(2014, 11, 22, 12, 0, 0, 0));
+        Message message = new Message(1L, 2L, 3L, null, new LocalDateTime(2014, 11, 22, 12, 0, 0, 0));
         messageService.updateMessage(message);
     }
 
@@ -195,8 +195,8 @@ public class messageServiceMockTest {
 
     @Test
     public void getAllMessagesByTimePeriodTest() {
-        DateTime startTime=new DateTime(new DateTime(2014, 11, 22, 12, 0, 0, 0));
-        DateTime finishTime=new DateTime(new DateTime(2014, 11, 23, 12, 0, 0, 0));
+        LocalDateTime startTime=new LocalDateTime(2014, 11, 22, 12, 0, 0, 0);
+        LocalDateTime finishTime=new LocalDateTime(2014, 11, 23, 12, 0, 0, 0);
 
         List<Message> messages=new ArrayList<Message>();
         messages.add(new Message());
@@ -210,8 +210,8 @@ public class messageServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void getAllMessagesByTimePeriodWithoutStartDateTimeTest() {
-        DateTime startTime = null;
-        DateTime finishTime=new DateTime(new DateTime(2014, 11, 23, 12, 0, 0, 0));
+        LocalDateTime startTime = null;
+        LocalDateTime finishTime=new LocalDateTime(2014, 11, 23, 12, 0, 0, 0);
         List<Message> messages=new ArrayList<Message>();
         messages.add(new Message());
         messageDao.getAllMessagesByTimePeriod(startTime,finishTime);
@@ -224,8 +224,8 @@ public class messageServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void getAllMessagesByTimePeriodWithoutFinishDateTimeTest() {
-        DateTime startTime = new DateTime(2014, 11, 22, 12, 0, 0, 0);
-        DateTime finishTime =null;
+        LocalDateTime startTime = new LocalDateTime(2014, 11, 22, 12, 0, 0, 0);
+        LocalDateTime finishTime =null;
         List<Message> messages=new ArrayList<Message>();
         messages.add(new Message());
         messageDao.getAllMessagesByTimePeriod(startTime,finishTime);
@@ -238,8 +238,8 @@ public class messageServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void getAllMessagesByTimePeriodWithWrongDateTimesTest() {
-        DateTime startTime =new DateTime(2014, 11, 23, 12, 0, 0, 0) ;
-        DateTime finishTime =new DateTime(2014, 11, 22, 12, 0, 0, 0);
+        LocalDateTime startTime =new LocalDateTime(2014, 11, 23, 12, 0, 0, 0) ;
+        LocalDateTime finishTime =new LocalDateTime(2014, 11, 22, 12, 0, 0, 0);
         List<Message> messages=new ArrayList<Message>();
         messages.add(new Message());
         messageDao.getAllMessagesByTimePeriod(startTime,finishTime);

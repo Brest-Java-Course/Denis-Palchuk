@@ -4,7 +4,7 @@ import com.denispalchuk.epam.task.domain.Message;
 import com.denispalchuk.epam.task.domain.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -40,7 +40,7 @@ public class MessageDaoImpl implements MessageDao {
     public Long addMessage(Message message) {
         LOGGER.debug("add Message {}",message);
         SqlParameterSource parameterSource= new BeanPropertySqlParameterSource(message);
-        namedParameterJdbcTemplate.update("insert into MESSAGE (messageId, messageFromUserId, messageToUserId, messageText, messageDateTime) values (:messageId, :messageFromUserId, :messageToUserId, :messageText, :messageDateTime)",
+        namedParameterJdbcTemplate.update("insert into MESSAGE (messageId, messageFromUserId, messageToUserId, messageText, messageDateTime) values (:messageId, :messageFromUserId, :messageToUserId, :messageText, NOW())",
                 parameterSource,keyHolder);
         return keyHolder.getKey().longValue();
     }
@@ -72,7 +72,7 @@ public class MessageDaoImpl implements MessageDao {
     public void updateMessage(Message message) {
         LOGGER.debug("update message {}",message);
         Map<String, Object> parameters = new HashMap(2);
-        parameters.put("messageDateTime",new Timestamp(message.getMessageDateTime().getMillis()));
+        parameters.put("messageDateTime",new Timestamp(message.getMessageDateTime().toDateTime().getMillis()));
         parameters.put("messageId",message.getMessageId());
         parameters.put("messageFromUserId", message.getMessageFromUserId());
         parameters.put("messageToUserId",message.getMessageToUserId());
@@ -82,11 +82,11 @@ public class MessageDaoImpl implements MessageDao {
     }
 
     @Override
-    public List<Message> getAllMessagesByTimePeriod(DateTime startDateTime, DateTime finishDateTime) {
+    public List<Message> getAllMessagesByTimePeriod(LocalDateTime startDateTime, LocalDateTime finishDateTime) {
         LOGGER.debug("get all messages by {} to {}",startDateTime,finishDateTime);
         Map<String, Object> parameters = new HashMap(2);
-        parameters.put("startDateTime", new Timestamp(startDateTime.getMillis()));
-        parameters.put("finishDateTime", new Timestamp(finishDateTime.getMillis()));
+        parameters.put("startDateTime", new Timestamp(startDateTime.toDateTime().getMillis()));
+        parameters.put("finishDateTime", new Timestamp(finishDateTime.toDateTime().getMillis()));
         return namedParameterJdbcTemplate.query("select messageId, messageFromUserId, messageToUserId, messageText, messageDateTime from MESSAGE where messageDateTime between :startDateTime and :finishDateTime",
                 parameters, new MessageMapper());
     }
@@ -96,7 +96,7 @@ public class MessageDaoImpl implements MessageDao {
         public Message mapRow(ResultSet resultSet, int i) throws SQLException {
             Message message = new Message();
             message.setMessageId(resultSet.getLong("messageId"));
-            message.setMessageDateTime(new DateTime(resultSet.getTimestamp("messageDateTime")));
+            message.setMessageDateTime(new LocalDateTime(resultSet.getTimestamp("messageDateTime")));
             message.setMessageFromUserId((resultSet.getLong("messageFromUserId")));
             message.setMessageToUserId(resultSet.getLong("messageToUserId"));
             message.setMessageText(resultSet.getString("messageText"));
