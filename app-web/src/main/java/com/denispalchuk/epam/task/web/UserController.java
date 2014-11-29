@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -58,7 +60,11 @@ public class UserController {
     @RequestMapping("/user/{id}")
     public ModelAndView launchUserForm(@PathVariable("id") Long userId) {
         User user=userService.getUserById(userId);
+        Integer age=userService.getAverageAgeUsersWhoMessagedWithUser(userId);
         LOGGER.debug("getUserById {}",userId);
-        return new ModelAndView("userForm","user",user);
+        Map<String,Object> map= new HashMap<String, Object>();
+        map.put("user",user);
+        map.put("age",age);
+        return new ModelAndView("userForm","map",map);
     }
 }

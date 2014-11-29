@@ -52,11 +52,10 @@
 </form:form>
 <form action="/submitMessage" method="post">
     <table>
-        <tr>
-            <label path="messageFromUserId">From user id:</label><input type="text" name="FromUserId"/><br/>
-            <label path="messageToUserId">To user id:</label><input type="text" name="ToUserId"/><br/>
-            <label path="messageText">Text:</label><input type="text" name="Text"/><br/>
-            <input type="submit" name="Submit">
+        <tr><td><label path="messageFromUserId">From user id:</label></td><td><input type="text" name="FromUserId"/><br/></td></tr>
+            <td><label path="messageToUserId">To user id:</label></td><td><input type="text" name="ToUserId"/><br/></td></tr>
+            <td><label path="messageText">Text:</label></td><td><input type="text" name="Text"/><br/></td></tr>
+            <td><input type="submit" name="Submit"></td></tr>
     </table>
 </form>
 <script src="js/jquery-1.11.1.js"></script>
