@@ -16,5 +16,6 @@
 <p><b>Date:</b> ${datetime}</p>
 <p><b>Error code:</b> ${exception}</p>
 <p><b>Request URI:</b> ${url}</p><br/>
+
 </body>
 </html>
