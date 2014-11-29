@@ -14,6 +14,7 @@
         <module>app-dao</module>
         <module>app-service</module>
         <module>app-rest</module>
+        <module>app-web</module>
     </modules>
     <properties>
         <org.springframework.version>4.1.1.RELEASE</org.springframework.version>
@@ -95,12 +96,6 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>3.1.0</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
                 <version>2.3.1</version>
@@ -137,8 +132,24 @@
                 <artifactId>jackson-datatype-joda</artifactId>
                 <version>${jackson.databind-version}</version>
             </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>3.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-servlets</artifactId>
+                <version>9.2.4.v20141103</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
     <reporting>
         <plugins>
             <plugin>

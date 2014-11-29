@@ -116,6 +116,8 @@ public class UserDaoImpl implements UserDao{
             user.setUserName(resultSet.getString("userName"));
             user.setUserLogin(resultSet.getString("userLogin"));
             user.setUserAge(resultSet.getInt("userAge"));
+
+
             return user;
         }
     }

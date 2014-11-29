@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long userId) {
         Assert.notNull(userId,"userId can't be null");
-        User user=new User();
+        User user=null;
         try {
             user=userDao.getUserById(userId);
         } catch (EmptyResultDataAccessException ex) {
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByLogin(String userLogin) {
         Assert.notNull(userLogin,"userLogin");
-        User user=new User();
+        User user=null;
         try {
             user=userDao.getUserByLogin(userLogin);
         } catch (EmptyResultDataAccessException ex) {
