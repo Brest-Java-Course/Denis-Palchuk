@@ -5,9 +5,6 @@ import com.denispalchuk.epam.task.domain.User;
 import com.denispalchuk.epam.task.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -29,6 +23,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+
     @RequestMapping("/")
     public String init() {
         return "redirect:/inputForm";
@@ -36,7 +32,7 @@ public class UserController {
 
     @RequestMapping("/inputForm")
     public ModelAndView launchInputForm() {
-      return new ModelAndView("inputForm", "user", new User());
+        return new ModelAndView("inputForm", "user", new User());
     }
 
     @RequestMapping("/submitData")

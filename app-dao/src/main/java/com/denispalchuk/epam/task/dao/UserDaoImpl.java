@@ -126,7 +126,7 @@ public class UserDaoImpl implements UserDao{
         @Override
         public Message mapRow(ResultSet resultSet, int i) throws SQLException {
             Message message = new Message();
-            message.setMessageDateTime(new LocalDateTime(resultSet.getDate("messageDateTime")));
+            message.setMessageDateTime(new LocalDateTime(resultSet.getTimestamp("messageDateTime")));
             message.setMessageFromUserId((resultSet.getLong("messageFromUserId")));
             message.setMessageToUserId(resultSet.getLong("messageToUserId"));
             message.setMessageText(resultSet.getString("messageText"));

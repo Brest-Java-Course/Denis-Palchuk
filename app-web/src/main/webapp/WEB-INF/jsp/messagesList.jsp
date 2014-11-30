@@ -24,42 +24,53 @@
 </head>
 
 <body>
-
-
-<form:form method="get" modelAttribute="messages">
-<h1><spring:message code="message.list" /></h1>
-<ul>
-    <table id="messages">
-        <th>
-            <td>id</td>
-            <td>FromUserId</td>
-            <td>ToUserId</td>
-            <td>Text</td>
-            <td>Date and Time</td>
-        </th>
-        <c:forEach items="${messages}" var="message">
-        <tr>
-            <td/>
-            <td>${message.messageId}</td>
-            <td><a href='<spring:url value="/user/${message.messageFromUserId}" ></spring:url>'>${message.messageFromUserId}</a></td>
-            <td><a href='<spring:url value="/user/${message.messageToUserId}" ></spring:url>'>${message.messageToUserId}</a></td>
-            <td>${message.messageText}</td>
-            <td><joda:format value="${message.messageDateTime}" style="SS" /></td>
-             <td><a href='<spring:url value="/deleteMessage" ><spring:param name="messageId" value="${message.messageId}" /> </spring:url>'>Delete</a></td>
-        </tr>
-    </c:forEach>
-    </table>
-</ul>
-</form:form>
-<form action="/submitMessage" method="post">
-    <table>
-        <tr><td><label path="messageFromUserId">From user id:</label></td><td><input type="text" name="FromUserId"/><br/></td></tr>
-            <td><label path="messageToUserId">To user id:</label></td><td><input type="text" name="ToUserId"/><br/></td></tr>
-            <td><label path="messageText">Text:</label></td><td><input type="text" name="Text"/><br/></td></tr>
-            <td><input type="submit" name="Submit"></td></tr>
-    </table>
-</form>
-<script src="js/jquery-1.11.1.js"></script>
-<script src="js/main.js"></script>
+    <form action="" method="locale">
+        <select name="locale" >
+            <option value="ru_RU">ru</option>
+            <option value="en_US">en</option>
+        </select>
+        <input type="submit" value=<spring:message code="language.change" />>
+    </form>
+    <h1><spring:message code="message.list" /></h1>
+    <form:form method="get" modelAttribute="messages">
+    <ul>
+        <table id="messages">
+            <th>
+                <td><spring:message code="user.id" /></td>
+                <td><spring:message code="message.fromUserId" /></td>
+                <td><spring:message code="message.toUserId" /></td>
+                <td><spring:message code="message.text" /></td>
+                <td><spring:message code="message.dateTime" /></td>
+            </th>
+            <c:forEach items="${messages}" var="message">
+            <tr>
+                <td/>
+                <td>${message.messageId}</td>
+                <td><a href='<spring:url value="/user/${message.messageFromUserId}" ></spring:url>'>${message.messageFromUserId}</a></td>
+                <td><a href='<spring:url value="/user/${message.messageToUserId}" ></spring:url>'>${message.messageToUserId}</a></td>
+                <td>${message.messageText}</td>
+                <td><joda:format value="${message.messageDateTime}" style="SS" /></td>
+                 <td><a href='<spring:url value="/deleteMessage" ><spring:param name="messageId" value="${message.messageId}" /> </spring:url>'><spring:message code="user.del" /></a></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <form action="/MessagesByDate" method="post">
+            </tr>
+        </c:forEach>
+        </table>
+    </ul>
+    </form:form>
+    <form action="/submitMessage" method="post">
+        <table>
+            <tr><td><label path="messageFromUserId"><spring:message code="message.fromUserId" />:</label></td><td><input type="text" name="FromUserId"/><br/></td></tr>
+                <td><label path="messageToUserId"><spring:message code="message.toUserId" />:</label></td><td><input type="text" name="ToUserId"/><br/></td></tr>
+                <td><label path="messageText"><spring:message code="message.text" />:</label></td><td><input type="text" name="Text"/><br/></td></tr>
+                <td><input type="submit" name="Submit" value=<spring:message code="user.add" />></td></tr>
+        </table>
+    </form>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
