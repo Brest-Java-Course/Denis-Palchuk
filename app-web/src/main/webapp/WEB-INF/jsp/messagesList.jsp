@@ -8,7 +8,7 @@
 <html lang="en">
 
 <head>
-    <link href="<c:url value="/WEB_INF/jsp/css/anytime.5.0.5.min.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/anytime.5.0.5.min.css" />" rel="stylesheet">
     <style type="text/css">
            #messages {
                width: 800px;
@@ -22,9 +22,9 @@
                background: #b0e0e6;
            }
     </style>
-    <script src="<c:url value="/WEB_INF/jsp/js/anytime.5.0.5.min.css" />"></script>
-    <script src="<c:url value="/WEB_INF/jsp/js/main.js" />"></script>
-    <script src="$<c:url value="/WEB_INF/jsp/js/jquery-1.11.1.js" />"></script>
+    <script src="<c:url value="/resources/js/anytime.5.0.5.js" />"></script>
+    <script src="<c:url value="/resources/js/main.js" />"></script>
+    <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
 
 </head>
 
@@ -60,9 +60,15 @@
             </c:forEach>
         </table>
     </ul>
-    <form action="/MessagesByDate" method="post">
-    <input type="text" id="from" size="50" value="Sunday, July 30th in the Year 1967 CE" /><br/>
     </form:form>
+
+    <form action="/filterList" method="post">
+    From:<input type="text" id="dateTimeField" name="fromDate"/>
+        <script>AnyTime.picker('dateTimeField');</script>
+    To: <input type="text" id="dateTimeField2" name="toDate"/>
+                <script>AnyTime.picker('dateTimeField2');</script></br>
+    <td><input type="submit" name="Submit">
+    </form>
 
 
 

@@ -5,6 +5,8 @@ import com.denispalchuk.epam.task.domain.User;
 import com.denispalchuk.epam.task.service.MessageService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +51,16 @@ public class MessageController {
     @RequestMapping("/messagesList")
     public ModelAndView getListUsersView() {
         List<Message> messages = messageService.getAllMessages();
+        LOGGER.debug("messages.size = " + messages.size());
+        ModelAndView view = new ModelAndView("messagesList", "messages", messages);
+        return view;
+    }
+
+    @RequestMapping("/filterList")
+    public ModelAndView getMessagesByPeriod(@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        List<Message> messages = messageService.getAllMessagesByTimePeriod(formatter.parseLocalDateTime(fromDate),
+                formatter.parseLocalDateTime(toDate));
         LOGGER.debug("messages.size = " + messages.size());
         ModelAndView view = new ModelAndView("messagesList", "messages", messages);
         return view;
