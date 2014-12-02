@@ -6,20 +6,25 @@
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <link href="<c:url value="/WEB_INF/jsp/css/anytime.5.0.5.min.css" />" rel="stylesheet">
     <style type="text/css">
-        #messages {
-            width: 800px;
-            border-collapse: collapse;
-        }
-        td , th {
-            padding: 3px;
-            border: 1px solid black;
-        }
-        TH {
-            background: #b0e0e6;
-        }
+           #messages {
+               width: 800px;
+               border-collapse: collapse;
+           }
+           td , th {
+               padding: 3px;
+               border: 1px solid black;
+           }
+           TH {
+               background: #b0e0e6;
+           }
     </style>
+    <script src="<c:url value="/WEB_INF/jsp/js/anytime.5.0.5.min.css" />"></script>
+    <script src="<c:url value="/WEB_INF/jsp/js/main.js" />"></script>
+    <script src="$<c:url value="/WEB_INF/jsp/js/jquery-1.11.1.js" />"></script>
 
 </head>
 
@@ -52,16 +57,16 @@
                 <td><joda:format value="${message.messageDateTime}" style="SS" /></td>
                  <td><a href='<spring:url value="/deleteMessage" ><spring:param name="messageId" value="${message.messageId}" /> </spring:url>'><spring:message code="user.del" /></a></td>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td>
-                    <form action="/MessagesByDate" method="post">
-            </tr>
-        </c:forEach>
+            </c:forEach>
         </table>
     </ul>
+    <form action="/MessagesByDate" method="post">
+    <input type="text" id="from" size="50" value="Sunday, July 30th in the Year 1967 CE" /><br/>
     </form:form>
+
+
+
+
     <form action="/submitMessage" method="post">
         <table>
             <tr><td><label path="messageFromUserId"><spring:message code="message.fromUserId" />:</label></td><td><input type="text" name="FromUserId"/><br/></td></tr>
@@ -70,7 +75,5 @@
                 <td><input type="submit" name="Submit" value=<spring:message code="user.add" />></td></tr>
         </table>
     </form>
-    <script src="js/jquery-1.11.1.js"></script>
-    <script src="js/main.js"></script>
 </body>
 </html>

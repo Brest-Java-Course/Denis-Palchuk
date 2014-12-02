@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +50,7 @@
                         <tr><td><spring:message code="user.name" />:</td><td>${user.userName}</td></tr>
                         <tr><td><spring:message code="user.age" />:</td><td>${user.userAge}</td></tr>
                         <form:form method="get" modelAttribute="age">
-                        <tr><td>AvAge:  </td><td>${age}</td></tr>
+                        <tr><td><spring:message code="user.avage" />:  </td><td>${age}</td></tr>
                         <tr><td><a href='<spring:url value="/deleteData" ><spring:param name="userId" value="${user.userId}" /> </spring:url>'><spring:message code="user.del" /></a></td><tr>
                     </table>
                         </form:form>
@@ -57,14 +58,14 @@
                 </td>
                 <td>
                     <table id="tabl" border="2">
-                        <th><td id="fromid"><spring:message code="message.from" /></td><td>Message</td></th>
+                        <th><td id="fromid"><spring:message code="message.from" /></td><td><spring:message code="message.text" /></td><td><spring:message code="message.dateTime" /></td></th>
                         <form:form method="get" modelAttribute="messages">
                         <c:forEach items="${messages}" var="message">
                         <tr>
                             <td></td>
                             <td id="fromid"><a href='<spring:url value="/user/${message.messageFromUserId}" ></spring:url>'>${message.messageFromUserId}</a></td>
                             <td>${message.messageText}</td>
-                            <td>${message.messageDateTime}</td>
+                            <td><joda:format value="${message.messageDateTime}" style="SS" /></td>
                         </tr>
                         </c:forEach>
                     </table>
