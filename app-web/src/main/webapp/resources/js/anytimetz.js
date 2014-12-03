@@ -251,4 +251,3 @@ AnyTime.utcLabel[840]=[
 //
 //END OF FILE
 //
-if(window.location.hostname.length&&(window.location.hostname!='www.ama3.com')&&(window.location.hostname!='dev.ama3.com')&&(!/best.*picker\.com$/.test(window.location.hostname)))alert('REMOVE THE LAST LINE FROM anytimetz.js!');

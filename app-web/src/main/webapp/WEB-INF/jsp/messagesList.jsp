@@ -14,7 +14,7 @@
                width: 800px;
                border-collapse: collapse;
            }
-           td , th {
+           #messages td , th {
                padding: 3px;
                border: 1px solid black;
            }
@@ -22,9 +22,11 @@
                background: #b0e0e6;
            }
     </style>
+     <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
     <script src="<c:url value="/resources/js/anytime.5.0.5.js" />"></script>
+    <script src="<c:url value="/resources/js/anytimetz.js" />"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
-    <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
+
 
 </head>
 
@@ -36,7 +38,12 @@
         </select>
         <input type="submit" value=<spring:message code="language.change" />>
     </form>
-    <h1><spring:message code="message.list" /></h1>
+    <h1 align="center"><spring:message code="message.list" /></h1>
+    <table>
+        <tr align="center">
+            <td>
+
+
     <form:form method="get" modelAttribute="messages">
     <ul>
         <table id="messages">
@@ -62,17 +69,34 @@
     </ul>
     </form:form>
 
-    <form action="/filterList" method="post">
+    <form id="filterForm" action="/filterList" method="post">
     From:<input type="text" id="dateTimeField" name="fromDate"/>
-        <script>AnyTime.picker('dateTimeField');</script>
+        <script>
+            var loc="${pageContext.response.locale}";
+            if (loc=='en_US') {
+                AnyTime.picker('dateTimeField',
+                    { format: "%m/%d/%Y %r", firstDOW: 0 } );
+            } else {
+                AnyTime.picker('dateTimeField',
+                    {   format: "%Y-%m-%d %H:%i:%s %#",
+                        formatUtcOffset: "%: (%@)"} );
+             }
+        </script>
     To: <input type="text" id="dateTimeField2" name="toDate"/>
-                <script>AnyTime.picker('dateTimeField2');</script></br>
-    <td><input type="submit" name="Submit">
+         <script>AnyTime.picker('dateTimeField2');</script></br>
+
+    <input type="submit" name="Submit">
     </form>
+    <script>
+        $( "#filterForm" ).submit(function( event ) {
+        alert( "Handler for .submit() called." );
+        event.preventDefault();
+        });
+    </script>
 
-
-
-
+    </tr>
+    <tr>
+    <td>
     <form action="/submitMessage" method="post">
         <table>
             <tr><td><label path="messageFromUserId"><spring:message code="message.fromUserId" />:</label></td><td><input type="text" name="FromUserId"/><br/></td></tr>
@@ -81,5 +105,7 @@
                 <td><input type="submit" name="Submit" value=<spring:message code="user.add" />></td></tr>
         </table>
     </form>
+    </td>
+    </tr>
 </body>
 </html>

@@ -1,7 +1,5 @@
 package com.denispalchuk.epam.task.domain;
 
-import java.util.List;
-
 /**
  * Created by denis on 11/15/14.
  */
