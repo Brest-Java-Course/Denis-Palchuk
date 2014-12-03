@@ -76,24 +76,49 @@
             if (loc=='en_US') {
                 AnyTime.picker('dateTimeField',
                     { format: "%m/%d/%Y %r", firstDOW: 0 } );
+
             } else {
                 AnyTime.picker('dateTimeField',
-                    {   format: "%Y-%m-%d %H:%i:%s %#",
+                    {   format: "%Y-%m-%d %H:%i:%s",
                         formatUtcOffset: "%: (%@)"} );
+
              }
         </script>
     To: <input type="text" id="dateTimeField2" name="toDate"/>
-         <script>AnyTime.picker('dateTimeField2');</script></br>
+
+       <script>
+                   var loc="${pageContext.response.locale}";
+                   if (loc=='en_US') {
+                       AnyTime.picker('dateTimeField2',
+                           { format: "%m/%d/%Y %r", firstDOW: 0 } );
+                   } else {
+                       AnyTime.picker('dateTimeField2',
+                           {   format: "%Y-%m-%d %H:%i:%s",
+                               formatUtcOffset: "%: (%@)"} );
+
+                    }
+               </script></br>
 
     <input type="submit" name="Submit">
     </form>
     <script>
-        $( "#filterForm" ).submit(function( event ) {
-        alert( "Handler for .submit() called." );
-        event.preventDefault();
-        });
+    if ("${pageContext.response.locale}"=='en_US') {
+        $( "#filterForm" ).submit(function() {
+            var englishVer=$('#dateTimeField').val();
+            var conv= new AnyTime.Converter({format: "%m/%d/%Y %r"});
+            var dt=conv.parse($('#dateTimeField').val());
+            var conv=new AnyTime.Converter({format: "%Y-%m-%d %H:%i:%s"});
+            var result= conv.format( dt );
+            $('#dateTimeField').val(result);
+            var englishVer=$('#dateTimeField2').val();
+            var conv= new AnyTime.Converter({format: "%m/%d/%Y %r"});
+            var dt=conv.parse($('#dateTimeField2').val());
+            var conv=new AnyTime.Converter({format: "%Y-%m-%d %H:%i:%s"});
+            var result= conv.format( dt );
+            $('#dateTimeField2').val(result);
+        })
+    };
     </script>
-
     </tr>
     <tr>
     <td>
