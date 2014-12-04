@@ -43,14 +43,14 @@ public class UserController {
         user.setUserName(userName);
         user.setUserAge(userAge);
         userService.addUser(user);
-        return "redirect:/usersList";
+        return "redirect:/admin/usersList";
     }
     @RequestMapping("/deleteData")
     public String deleteUser(@RequestParam("userId")Long userId) {
         userService.removeUser(userId);
-        return "redirect:/usersList";
+        return "redirect:/admin/usersList";
     }
-    @RequestMapping("/usersList")
+    @RequestMapping("/admin/usersList")
     public ModelAndView getListUsersView() {
       List<User> users = userService.getAllUsers();
       LOGGER.debug("users.size = " + users.size());

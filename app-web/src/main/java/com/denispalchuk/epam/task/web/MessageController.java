@@ -39,16 +39,16 @@ public class MessageController {
         message.setMessageToUserId(toUserId);
         message.setMessageText(messageText);
         messageService.addMessage(message);
-        return "redirect:/messagesList";
+        return "redirect:/admin/messagesList";
     }
 
     @RequestMapping("/deleteMessage")
     public String deleteUser(@RequestParam("messageId")Long messageId) {
         messageService.removeMessage(messageId);
-        return "redirect:/messagesList";
+        return "redirect:/admin/messagesList";
     }
 
-    @RequestMapping("/messagesList")
+    @RequestMapping("/admin/messagesList")
     public ModelAndView getListUsersView() {
         List<Message> messages = messageService.getAllMessages();
         LOGGER.debug("messages.size = " + messages.size());
@@ -56,7 +56,7 @@ public class MessageController {
         return view;
     }
 
-    @RequestMapping("/filterList")
+    @RequestMapping("/admin/filterList")
     public ModelAndView getMessagesByPeriod(@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
         List<Message> messages = messageService.getAllMessagesByTimePeriod(formatter.parseLocalDateTime(fromDate),

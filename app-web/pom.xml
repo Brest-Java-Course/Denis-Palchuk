@@ -32,6 +32,10 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time-jsptags</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.sitemesh</groupId>
+            <artifactId>sitemesh</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

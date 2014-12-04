@@ -9,20 +9,7 @@
 
 <head>
     <link href="<c:url value="/resources/css/anytime.5.0.5.min.css" />" rel="stylesheet">
-    <style type="text/css">
-           #messages {
-               width: 800px;
-               border-collapse: collapse;
-           }
-           #messages td , th {
-               padding: 3px;
-               border: 1px solid black;
-           }
-           TH {
-               background: #b0e0e6;
-           }
-    </style>
-     <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
+    <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
     <script src="<c:url value="/resources/js/anytime.5.0.5.js" />"></script>
     <script src="<c:url value="/resources/js/anytimetz.js" />"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
@@ -31,45 +18,35 @@
 </head>
 
 <body>
-    <form action="" method="locale">
-        <select name="locale" >
-            <option value="ru_RU">ru</option>
-            <option value="en_US">en</option>
-        </select>
-        <input type="submit" value=<spring:message code="language.change" />>
-    </form>
     <h1 align="center"><spring:message code="message.list" /></h1>
-    <table>
-        <tr align="center">
-            <td>
 
-
-    <form:form method="get" modelAttribute="messages">
-    <ul>
-        <table id="messages">
-            <th>
-                <td><spring:message code="user.id" /></td>
-                <td><spring:message code="message.fromUserId" /></td>
-                <td><spring:message code="message.toUserId" /></td>
-                <td><spring:message code="message.text" /></td>
-                <td><spring:message code="message.dateTime" /></td>
-            </th>
-            <c:forEach items="${messages}" var="message">
+        <form:form method="get" modelAttribute="messages">
+        <ul>
+            <table table class="simple-little-table" cellspacing='0'>
             <tr>
-                <td/>
-                <td>${message.messageId}</td>
-                <td><a href='<spring:url value="/user/${message.messageFromUserId}" ></spring:url>'>${message.messageFromUserId}</a></td>
-                <td><a href='<spring:url value="/user/${message.messageToUserId}" ></spring:url>'>${message.messageToUserId}</a></td>
-                <td>${message.messageText}</td>
-                <td><joda:format value="${message.messageDateTime}" style="SS" /></td>
-                 <td><a href='<spring:url value="/deleteMessage" ><spring:param name="messageId" value="${message.messageId}" /> </spring:url>'><spring:message code="user.del" /></a></td>
-            </tr>
-            </c:forEach>
-        </table>
-    </ul>
-    </form:form>
+                    <th class="uid"><spring:message code="message.fromUserId" /></td>
+                    <th class="uid"><spring:message code="message.toUserId" /></td>
+                    <th><spring:message code="message.text" /></td>
+                    <th class="date"><spring:message code="message.dateTime" /></td>
+                    <th><spring:message code="user.del" /></th>
+                </th>
+                </tr>
+                <c:forEach items="${messages}" var="message">
 
-    <form id="filterForm" action="/filterList" method="post">
+                <tr>
+                    <td><a href='<spring:url value="/user/${message.messageFromUserId}" ></spring:url>'>${message.messageFromUserId}</a></td>
+                    <td><a href='<spring:url value="/user/${message.messageToUserId}" ></spring:url>'>${message.messageToUserId}</a></td>
+                    <td class="textMess">${message.messageText}</td>
+                    <td><joda:format value="${message.messageDateTime}" style="SS" /></td>
+                     <td class="deleteMess"><a href='<spring:url value="/deleteMessage" ><spring:param name="messageId" value="${message.messageId}" /> </spring:url>'><spring:message code="user.del" /></a></td>
+                </tr>
+                </c:forEach>
+            </table>
+        </ul>
+    </form:form>
+    <a class="filterLink" href="javascript:hideFilter('div1');"><spring:message code="filter.showHide" /></a>
+        <div id="div1" style="display:none">
+    <form id="filterForm" action="/admin/filterList" method="post">
     From:<input type="text" id="dateTimeField" name="fromDate"/>
         <script>
             var loc="${pageContext.response.locale}";
@@ -119,18 +96,14 @@
         })
     };
     </script>
-    </tr>
-    <tr>
-    <td>
-    <form action="/submitMessage" method="post">
-        <table>
-            <tr><td><label path="messageFromUserId"><spring:message code="message.fromUserId" />:</label></td><td><input type="text" name="FromUserId"/><br/></td></tr>
-                <td><label path="messageToUserId"><spring:message code="message.toUserId" />:</label></td><td><input type="text" name="ToUserId"/><br/></td></tr>
-                <td><label path="messageText"><spring:message code="message.text" />:</label></td><td><input type="text" name="Text"/><br/></td></tr>
-                <td><input type="submit" name="Submit" value=<spring:message code="user.add" />></td></tr>
-        </table>
-    </form>
-    </td>
-    </tr>
-</body>
+    <script>
+    function hideFilter(type){
+    param=document.getElementById(type);
+    if(param.style.display == "none") param.style.display = "block";
+    else param.style.display = "none"
+    }
+    </script>
+
+    </div>
+    </body>
 </html>

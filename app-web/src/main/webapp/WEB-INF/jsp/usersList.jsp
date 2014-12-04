@@ -6,44 +6,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style type="text/css">
-        table {
-            width: 300px;
-            border-collapse: collapse;
-        }
-        td , th {
-            padding: 3px;
-            border: 1px solid black;
-        }
-        TH {
-            background: #b0e0e6;
-        }
-    </style>
 
 </head>
-
+<header>
+</header>
 <body>
-<form action="" method="locale">
-            <select name="locale" >
-                <option value="ru_RU">ru</option>
-                <option value="en_US">en</option>
-            </select>
-            <input type="submit" value=<spring:message code="language.change" />>
-        </form>
-<h1><spring:message code="user.list" /></h1>
+    <h1><spring:message code="user.list" /></h1>
 <form:form method="get" modelAttribute="users">
 <ul>
-    <table class="userInfo">
-        <th>
-            <td><spring:message code="user.id" /></td>
-            <td><spring:message code="user.login" /></td>
-            <td><spring:message code="user.name" /></td>
-            <td><spring:message code="user.age" /></td>
-            <td><spring:message code="user.delete" /></td>
-        </th>
+    <table class="simple-little-table" cellspacing='0'>
+    <tr>
+            <th><spring:message code="user.id" /></td>
+            <th class="userLogin"><spring:message code="user.login" /></td>
+            <th class="userName"><spring:message code="user.name" /></td>
+            <th><spring:message code="user.age" /></td>
+            <th><spring:message code="user.delete" /></td>
+    </tr>
         <c:forEach items="${users}" var="user">
         <tr>
-            <td/>
             <td><a href='<spring:url value="/user/${user.userId}" ></spring:url>'>${user.userId}</a></td>
             <td>${user.userLogin}</td>
             <td>${user.userName}</td>

@@ -1,12 +1,5 @@
 <html>
     <body>
-        <form action="" method="locale">
-            <select name="locale" >
-                <option value="ru_RU">ru</option>
-                <option value="en_US">en</option>
-            </select>
-            <input type="submit" value=<spring:message code="language.change" />>
-        </form>
         <h1><spring:message code="message.create" /></h1>
 
         <form action="/submitMessage" method="post">
