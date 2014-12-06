@@ -35,7 +35,7 @@ public class UserDaoImplTest {
 
     @Test
     public void addUserTest() {
-        User user=new User(null,"userLogin4","userName4",4);
+        User user=new User(null,"userLogin4","userName4",4,null);
         userDao.addUser(user);
         List<User> users=userDao.getAllUsers();
         assertEquals(4,users.size());
@@ -74,7 +74,7 @@ public class UserDaoImplTest {
 
     @Test
     public void updateUserTest() {
-        User user=new User(1L,"newUserLogin1","newUserName1",1);
+        User user=new User(1L,"newUserLogin1","newUserName1",1,2);
         userDao.updateUser(user);
         User newUser=userDao.getUserById(1L);
         assertEquals(user,newUser);

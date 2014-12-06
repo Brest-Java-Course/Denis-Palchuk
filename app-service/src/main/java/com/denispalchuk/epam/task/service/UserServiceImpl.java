@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long addUser(User user) {
         Assert.isNull(user.getUserId(), "userId should be null");
-
+        Assert.isNull(user.getUserCountWriters());
         Assert.notNull(user.getUserLogin(),"userLogin can't be null");
         if (user.getUserLogin().equals("admin")) {
             LOGGER.error("user login can't be 'admin' ");

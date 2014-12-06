@@ -3,8 +3,6 @@ package com.denispalchuk.epam.task.dao;
 import com.denispalchuk.epam.task.domain.Message;
 import com.denispalchuk.epam.task.domain.User;
 import org.joda.time.LocalDateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -43,7 +41,7 @@ public class UserDaoImpl implements UserDao{
     @Override
     public List<User> getAllUsers() {
         LOGGER.debug("Get All users()");
-        return namedParameterJdbcTemplate.query("select userId, userLogin, userName, userAge from USER", new UserMapper());
+        return namedParameterJdbcTemplate.query("select userId, userLogin, userName, userAge, count(distinct MESSAGE.messageFromUserId) AS writers from USER left join MESSAGE ON USER.userId=MESSAGE.messageToUserId group by USER.userId", new UserMapper());
     }
 
     @Override
@@ -51,7 +49,7 @@ public class UserDaoImpl implements UserDao{
         LOGGER.debug("get User by id {}",userId);
         Map<String, Object> parameters = new HashMap(1);
         parameters.put("userId", userId);
-        return namedParameterJdbcTemplate.queryForObject("select userId, userLogin, userName, userAge from USER where userId = :userId",
+        return namedParameterJdbcTemplate.queryForObject("select userId, userLogin, userName, userAge, count(distinct MESSAGE.messageFromUserId) AS writers from USER left join MESSAGE ON USER.userId=MESSAGE.messageToUserId where userId = :userId group by USER.userId",
             parameters,new UserMapper());
     }
 
@@ -60,7 +58,7 @@ public class UserDaoImpl implements UserDao{
         LOGGER.debug("get user by login {}",userLogin);
         Map<String, Object> parameters = new HashMap(1);
         parameters.put("userLogin", userLogin);
-        return namedParameterJdbcTemplate.queryForObject("select userId, userLogin, userName, userAge from USER where userLogin = :userLogin",
+        return namedParameterJdbcTemplate.queryForObject("select userId, userLogin, userName, userAge, count(distinct MESSAGE.messageFromUserId) AS writers from USER left join MESSAGE ON USER.userId=MESSAGE.messageToUserId where userLogin = :userLogin group by USER.userId",
                 parameters,new UserMapper());
     }
 
@@ -116,8 +114,7 @@ public class UserDaoImpl implements UserDao{
             user.setUserName(resultSet.getString("userName"));
             user.setUserLogin(resultSet.getString("userLogin"));
             user.setUserAge(resultSet.getInt("userAge"));
-
-
+            user.setUserCountWriters(resultSet.getInt("writers"));
             return user;
         }
     }

@@ -36,7 +36,7 @@ public class UserServiceMockTest {
 
     @Test
     public void AddUserTest() {
-        User user = new User(null, "NewLogin", "NewName", 10);
+        User user = new User(null, "NewLogin", "NewName", 10, null);
 
         userDao.getUserByLogin(user.getUserLogin());
         expectLastCall().andReturn(null);
@@ -52,25 +52,25 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void AddUserWithNotNullIdTest() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
         userService.addUser(user);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void AddUserWithNullLogin() {
-        User user=new User(null, null, "NewName", 10);
+        User user=new User(null, null, "NewName", 10, null);
         userService.addUser(user);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void AddUserWithAdminlLogin() {
-        User user=new User(null, "admin", "NewName", 10);
+        User user=new User(null, "admin", "NewName", 10, null);
         userService.addUser(user);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void AddUserWithExistingLoginTest() {
-        User user=new User(null, "NewLogin", "NewName", 10);
+        User user=new User(null, "NewLogin", "NewName", 10, null);
 
         userDao.getUserByLogin(user.getUserLogin());
         expectLastCall().andReturn(user);
@@ -82,7 +82,7 @@ public class UserServiceMockTest {
     }
     @Test(expected = IllegalArgumentException.class)
     public void AddUserWithNullNameTest() {
-        User user=new User(null, "NewLogin", null, 10);
+        User user=new User(null, "NewLogin", null, 10, null);
 
         userDao.getUserByLogin(user.getUserLogin());
         expectLastCall().andReturn(null);
@@ -95,7 +95,7 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void AddUserWithNullAge() {
-        User user=new User(null, "NewLogin", "NewName", null);
+        User user=new User(null, "NewLogin", "NewName", null, null);
 
         userDao.getUserByLogin(user.getUserLogin());
         expectLastCall().andReturn(null);
@@ -108,7 +108,7 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void AddUserWithNegativeAge() {
-        User user=new User(null, "NewLogin", "NewName", -2);
+        User user=new User(null, "NewLogin", "NewName", -2, null);
 
         userDao.getUserByLogin(user.getUserLogin());
         expectLastCall().andReturn(null);
@@ -141,7 +141,7 @@ public class UserServiceMockTest {
 
     @Test
     public void getUserByIdTest() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
 
         userDao.getUserById(1L);
         expectLastCall().andReturn(user);
@@ -167,7 +167,7 @@ public class UserServiceMockTest {
 
     @Test
     public void getUserByLoginTest() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
 
         userDao.getUserByLogin(user.getUserLogin());
         expectLastCall().andReturn(user);
@@ -183,7 +183,7 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void getUserByUnexistingLogin() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
 
         userDao.getUserByLogin(user.getUserLogin());
         expectLastCall().andThrow(new EmptyResultDataAccessException(0));
@@ -194,7 +194,7 @@ public class UserServiceMockTest {
 
     @Test
     public void removeUserTest() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
 
         userDao.getUserById(user.getUserId());
         expectLastCall().andReturn(user);
@@ -214,7 +214,7 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void removeUserWithUnexistingIdTest() {
-        User user=new User(1L, "admin", "NewName", 10);
+        User user=new User(1L, "admin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andThrow(new EmptyResultDataAccessException(0));
 
@@ -225,7 +225,7 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void removeUserWithLoginAdminTest() {
-        User user=new User(1L, "admin", "NewName", 10);
+        User user=new User(1L, "admin", "NewName", 10, null);
 
         userDao.getUserById(user.getUserId());
         expectLastCall().andReturn(user);
@@ -237,7 +237,7 @@ public class UserServiceMockTest {
 
     @Test
     public void updateUserTest() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andReturn(user);
 
@@ -254,13 +254,13 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateUserWithNullIdTest() {
-        User user=new User(null, "NewLogin", "NewName", 10);
+        User user=new User(null, "NewLogin", "NewName", 10, null);
         userService.updateUser(user);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void updateUserWithUnexistingIdTest() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andThrow(new EmptyResultDataAccessException(0));
 
@@ -271,8 +271,8 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateUserWithAdminLoginTest() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
-        User existingUser = new User(1L, "admin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
+        User existingUser = new User(1L, "admin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andReturn(existingUser);
         replay(userDao);
@@ -282,8 +282,8 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateUserWithNullLoginTest() {
-        User user=new User(1L, null, "NewName", 10);
-        User existingUser = new User(1L, "admin", "NewName", 10);
+        User user=new User(1L, null, "NewName", 10, null);
+        User existingUser = new User(1L, "admin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andReturn(existingUser);
 
@@ -294,8 +294,8 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateUserWithExistingLoginTest() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
-        User existingUser = new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
+        User existingUser = new User(1L, "NewLogin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andReturn(existingUser);
         userDao.getUserByLogin(user.getUserLogin());
@@ -307,8 +307,8 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateUserWithNewAdminLoginTest() {
-        User user=new User(1L, "admin", "NewName", 10);
-        User existingUser = new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "admin", "NewName", 10, null);
+        User existingUser = new User(1L, "NewLogin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andReturn(existingUser);
         userDao.getUserByLogin(user.getUserLogin());
@@ -320,8 +320,8 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateUserWithNullAgeTest() {
-        User user=new User(1L, "NewLogin", "NewName", null);
-        User existingUser = new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", null, null);
+        User existingUser = new User(1L, "NewLogin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andReturn(existingUser);
         userDao.getUserByLogin(user.getUserLogin());
@@ -333,8 +333,8 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateUserWithNegativeAgeTest() {
-        User user=new User(1L, "NewLogin", "NewName", 0);
-        User existingUser = new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 0, null);
+        User existingUser = new User(1L, "NewLogin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andReturn(existingUser);
         userDao.getUserByLogin(user.getUserLogin());
@@ -346,8 +346,8 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateUserWithNullNameTest() {
-        User user=new User(1L, "NewLogin", null, 10);
-        User existingUser = new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", null, 10, null);
+        User existingUser = new User(1L, "NewLogin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andReturn(existingUser);
         userDao.getUserByLogin(user.getUserLogin());
@@ -359,7 +359,7 @@ public class UserServiceMockTest {
 
     @Test
     public void getAverageAgeUsersWhoMessagedWithUserTest() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andReturn(user);
         userDao.getAverageAgeUsersWhoMessagedWithUser(user.getUserId());
@@ -377,7 +377,7 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void getAverageAgeUsersWhoMessagedWithUserWithUnexistingIdTest() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andThrow(new EmptyResultDataAccessException(0));
 
@@ -388,7 +388,7 @@ public class UserServiceMockTest {
 
     @Test
     public void getAllMessageFromUserTest() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
         List<Message> messages=new ArrayList<Message>();
         messages.add(new Message());
         userDao.getUserById(user.getUserId());
@@ -409,7 +409,7 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void getAllMessageFromUserWithUnexistingIdTest() {
-        User user=new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andThrow(new EmptyResultDataAccessException(0));
 
@@ -421,7 +421,7 @@ public class UserServiceMockTest {
     @Test(expected = IllegalArgumentException.class)
     public void getAllMessageFromUserWithoutMessagesTest() {
         List <Message> messages=new ArrayList<Message>();
-        User user=new User(1L, "NewLogin", "NewName", 10);
+        User user=new User(1L, "NewLogin", "NewName", 10, null);
         userDao.getUserById(user.getUserId());
         expectLastCall().andReturn(user);
 

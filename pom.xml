@@ -15,6 +15,7 @@
         <module>app-service</module>
         <module>app-rest</module>
         <module>app-web</module>
+        <module>app-rest-client</module>
     </modules>
     <properties>
         <org.springframework.version>4.1.1.RELEASE</org.springframework.version>
@@ -58,6 +59,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>app-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.denispalchuk.epam.task</groupId>
+                <artifactId>app-rest-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

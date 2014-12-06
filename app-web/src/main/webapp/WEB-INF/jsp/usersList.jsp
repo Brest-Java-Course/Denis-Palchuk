@@ -16,11 +16,12 @@
 <ul>
     <table class="simple-little-table" cellspacing='0'>
     <tr>
-            <th><spring:message code="user.id" /></td>
-            <th class="userLogin"><spring:message code="user.login" /></td>
-            <th class="userName"><spring:message code="user.name" /></td>
-            <th><spring:message code="user.age" /></td>
-            <th><spring:message code="user.delete" /></td>
+            <th><spring:message code="user.id" /></th>
+            <th class="userLogin"><spring:message code="user.login" /></th>
+            <th class="userName"><spring:message code="user.name" /></th>
+            <th><spring:message code="user.age" /></th>
+            <th><spring:message code="user.countWriters" /></th>
+            <th><spring:message code="user.delete" /></th>
     </tr>
         <c:forEach items="${users}" var="user">
         <tr>
@@ -28,6 +29,7 @@
             <td>${user.userLogin}</td>
             <td>${user.userName}</td>
             <td>${user.userAge}
+            <td>${user.userCountWriters}
              <td><a href='<spring:url value="/deleteData" ><spring:param name="userId" value="${user.userId}" /> </spring:url>'><spring:message code="user.del" /></a></td>
         </tr>
     </c:forEach>

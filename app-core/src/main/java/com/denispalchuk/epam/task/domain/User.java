@@ -8,15 +8,17 @@ public class User {
     private String userLogin;
     private String userName;
     private Integer userAge;
+    private Integer userCountWriters;
 
     public User(){
     }
 
-    public User(Long userId, String userLogin, String userName, Integer userAge) {
+    public User(Long userId, String userLogin, String userName, Integer userAge, Integer userCountWriters) {
         this.userId = userId;
         this.userLogin = userLogin;
         this.userName = userName;
         this.userAge = userAge;
+        this.userCountWriters=userCountWriters;
     }
 
     public Long getUserId() {
@@ -52,7 +54,14 @@ public class User {
         this.userAge = userAge;
     }
 
+    public Integer getUserCountWriters() {
 
+        return userCountWriters;
+    }
+
+    public void setUserCountWriters(Integer userCountWriters) {
+        this.userCountWriters = userCountWriters;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -62,6 +71,8 @@ public class User {
         User user = (User) o;
 
         if (userAge != null ? !userAge.equals(user.userAge) : user.userAge != null) return false;
+        if (userCountWriters != null ? !userCountWriters.equals(user.userCountWriters) : user.userCountWriters != null)
+            return false;
         if (userId != null ? !userId.equals(user.userId) : user.userId != null) return false;
         if (userLogin != null ? !userLogin.equals(user.userLogin) : user.userLogin != null) return false;
         if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
@@ -76,6 +87,7 @@ public class User {
                 ", userLogin='" + userLogin + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userAge=" + userAge +
+                ", userCountWriters=" + userCountWriters +
                 '}';
     }
 }

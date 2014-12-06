@@ -62,7 +62,7 @@ public class UserRestControllerMockTest {
 
         replay(userService);
         ObjectMapper objectMapper = new ObjectMapper();
-        String userJson = objectMapper.writeValueAsString(new User(null, "NewLogin", "NewName", 10));
+        String userJson = objectMapper.writeValueAsString(new User(null, "NewLogin", "NewName", 10, null));
         this.mockMvc.perform(
                 post("/users")
                         .content(userJson)
@@ -78,8 +78,8 @@ public class UserRestControllerMockTest {
     @Test
     public void getAllUsersTest() throws Exception {
         List<User> users = new ArrayList<User>();
-        users.add(new User(1L, "NewLogin1", "NewName1", 10));
-        users.add(new User(2L, "NewLogin2", "NewName2", 10));
+        users.add(new User(1L, "NewLogin1", "NewName1", 10, null));
+        users.add(new User(2L, "NewLogin2", "NewName2", 10, null));
         userService.getAllUsers();
         expectLastCall().andReturn(users);
         replay(userService);
@@ -88,15 +88,14 @@ public class UserRestControllerMockTest {
         )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("[{\"userId\":1,\"userLogin\":\"NewLogin1\",\"userName\":\"NewName1\",\"userAge\":10}," +
-                        "{\"userId\":2,\"userLogin\":\"NewLogin2\",\"userName\":\"NewName2\",\"userAge\":10}]"));
+                .andExpect(content().string("[{\"userId\":1,\"userLogin\":\"NewLogin1\",\"userName\":\"NewName1\",\"userAge\":10,\"userCountWriters\":null},{\"userId\":2,\"userLogin\":\"NewLogin2\",\"userName\":\"NewName2\",\"userAge\":10,\"userCountWriters\":null}]"));
 
 
     }
 
     @Test
     public void updateUserTest() throws Exception {
-        User user=new User(1L,"NewLogin","NewName",20);
+        User user=new User(1L,"NewLogin","NewName",20, null);
         userService.updateUser(user);
         expectLastCall();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -115,14 +114,14 @@ public class UserRestControllerMockTest {
     @Test
     public void getUserByIdTest() throws Exception {
         userService.getUserById(1L);
-        expectLastCall().andReturn(new User(1L, "NewLogin", "NewName", 10));
+        expectLastCall().andReturn(new User(1L, "NewLogin", "NewName", 10, null));
         replay(userService);
         this.mockMvc.perform(
                 get("/users/id/1").accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"userId\":1,\"userLogin\":\"NewLogin\",\"userName\":\"NewName\",\"userAge\":10}"));
+                .andExpect(content().string("{\"userId\":1,\"userLogin\":\"NewLogin\",\"userName\":\"NewName\",\"userAge\":10,\"userCountWriters\":null}"));
         verify(userService);
     }
 
@@ -144,14 +143,14 @@ public class UserRestControllerMockTest {
     @Test
     public void getUserByLoginTest() throws Exception {
         userService.getUserByLogin("NewLogin");
-        expectLastCall().andReturn(new User(1L, "NewLogin", "NewName", 10));
+        expectLastCall().andReturn(new User(1L, "NewLogin", "NewName", 10, null));
         replay(userService);
         this.mockMvc.perform(
                 get("/users/login/NewLogin").accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"userId\":1,\"userLogin\":\"NewLogin\",\"userName\":\"NewName\",\"userAge\":10}"));
+                .andExpect(content().string("{\"userId\":1,\"userLogin\":\"NewLogin\",\"userName\":\"NewName\",\"userAge\":10,\"userCountWriters\":null}"));
         verify(userService);
     }
 
