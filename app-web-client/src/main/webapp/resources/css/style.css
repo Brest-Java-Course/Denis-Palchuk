@@ -1,0 +1,208 @@
+.simple-little-table {
+margin: 0px auto;
+font-family:Arial, Helvetica, sans-serif;
+color:#666;
+font-size:12px;
+text-shadow: 1px 1px 0px #fff;
+background:#eaebec;
+border:#ccc 1px solid;
+border-collapse:separate;
+ 
+-moz-border-radius:3px;
+-webkit-border-radius:3px;
+border-radius:3px;
+ 
+-moz-box-shadow: 0 1px 2px #d1d1d1;
+-webkit-box-shadow: 0 1px 2px #d1d1d1;
+box-shadow: 0 1px 2px #d1d1d1;
+}
+ 
+.simple-little-table th {
+font-weight:bold;
+padding:15px 15px 15px 15px;
+border-top:1px solid #fafafa;
+border-bottom:1px solid #e0e0e0;
+ 
+background: #ededed;
+background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+}
+.simple-little-table th:first-child{
+text-align: left;
+padding-left:20px;
+}
+.simple-little-table tr:first-child th:first-child{
+-moz-border-radius-topleft:3px;
+-webkit-border-top-left-radius:3px;
+border-top-left-radius:3px;
+}
+.simple-little-table tr:first-child th:last-child{
+-moz-border-radius-topright:3px;
+-webkit-border-top-right-radius:3px;
+border-top-right-radius:3px;
+}
+.simple-little-table tr{
+text-align: center;
+padding-left:20px;
+}
+.simple-little-table tr td:first-child{
+text-align: center;
+padding-left:20px;
+border-left: 0;
+}
+.simple-little-table tr td {
+padding:18px;
+border-top: 1px solid #ffffff;
+border-bottom:1px solid #e0e0e0;
+border-left: 1px solid #e0e0e0;
+background: #fafafa;
+background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
+}
+.simple-little-table tr:nth-child(even) td{
+background: #f6f6f6;
+background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f6f6f6));
+background: -moz-linear-gradient(top,  #f8f8f8,  #f6f6f6);
+}
+.simple-little-table tr:last-child td{
+border-bottom:0;
+}
+.simple-little-table tr:last-child td:first-child{
+-moz-border-radius-bottomleft:3px;
+-webkit-border-bottom-left-radius:3px;
+border-bottom-left-radius:3px;
+}
+.simple-little-table tr:last-child td:last-child{
+-moz-border-radius-bottomright:3px;
+-webkit-border-bottom-right-radius:3px;
+border-bottom-right-radius:3px;
+}
+.simple-little-table tr:hover td{
+background: #f2f2f2;
+background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
+background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);	
+}
+a {
+    font-family:Arial, Helvetica, sans-serif;
+}
+a:link {
+color: #666;
+font-weight: bold;
+text-decoration:none;
+}
+a:visited {
+color:#666;
+font-weight:bold;
+text-decoration:none;
+}
+a:active,
+.simple-little-table a:hover {
+color:#666;
+text-decoration:underline;
+}
+body {
+    background: #f0f0f0;
+}
+.uid {
+    width:10px;
+}
+.date {
+    width:130px;
+}
+.textMess {
+    text-align:left;
+    width:75%;
+}
+.pageTable tr:first-child td:first-child {
+   width:200px;
+}
+.pageTable tr:first-child td:last-child {
+   width: 83%;
+   vertical-align: top;
+}
+h1 {
+    font-family:Arial, Helvetica, sans-serif;
+    text-align: center;
+    color:#666;
+}
+.userInfo {
+    font-family:Arial, Helvetica, sans-serif;
+}
+.addingPanel {
+    font-family:Arial, Helvetica, sans-serif;
+    text-align: center;
+    vertical-align: top;
+}
+textarea {
+border:#ccc 1px solid;
+border-collapse:separate;
+-moz-border-radius:3px;
+-webkit-border-radius:3px;
+border-radius:3px;
+
+-moz-box-shadow: 0 1px 2px #d1d1d1;
+-webkit-box-shadow: 0 1px 2px #d1d1d1;
+box-shadow: 0 1px 2px #d1d1d1;
+background-color:#f6f6f6;
+width: 70%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
+min-height: 100px;
+}
+
+input[type="text"] {
+    border:#ccc 1px solid;
+    border-collapse:separate;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+
+    -moz-box-shadow: 0 1px 2px #d1d1d1;
+    -webkit-box-shadow: 0 1px 2px #d1d1d1;
+    box-shadow: 0 1px 2px #d1d1d1;
+    background-color:#f6f6f6;
+}
+
+
+    /***FIRST STYLE THE BUTTON***/
+input[type="submit"]{
+    cursor:pointer; /*forces the cursor to change to a hand when the button is hovered*/
+    padding:5px 25px; /*add some padding to the inside of the button*/
+    background:#f3f3f3; /*the colour of the button*/
+    border:1px solid #f3f3f3; /*required or the default border for the browser will appear*/
+    /*give the button curved corners, alter the size as required*/
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    /*give the button a drop shadow*/
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0, .25);
+    -moz-box-shadow: 0 0 4px rgba(0,0,0, .25);
+    box-shadow: 0 0 4px rgba(0,0,0, .25);
+    /*style the text*/
+    color:#666;
+    font-size:0.7em;
+    }
+    /***NOW STYLE THE BUTTON'S HOVER AND FOCUS STATES***/
+input[type="submit"]:hover, input[type="submit"]:focus{
+    background-color :#f0f0f0; /*make the background a little darker*/
+    /*reduce the drop shadow size to give a pushed button effect*/
+    -webkit-box-shadow: 0 0 1px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
+    box-shadow: 0 0 1px rgba(0,0,0, .75);
+    }
+
+.new-select-style-wpandyou select {
+    border-radius: 1;
+    background: #f1f1f1;
+    height: 34px;
+    padding: 5px;
+    border: 0;
+    font-size: 16px;
+    line-height: 1;
+    -webkit-appearance: none;
+    width: 100px;
+   }
+   .userLogin {
+        width:100px;
+   }
+   .userName {
+           width:100px;
+      }

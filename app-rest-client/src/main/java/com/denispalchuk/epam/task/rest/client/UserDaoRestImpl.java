@@ -59,7 +59,7 @@ public class UserDaoRestImpl implements UserDao {
 
     public List<Message> getAllMessageFromUser(Long userId) {
         LOGGER.debug("client request to get all message from user with userid = {}",userId);
-        List<Message> messages=restTemplate.getForObject(REST_URL+"?userId={userId}",List.class,userId);
+        List<Message> messages=restTemplate.getForObject(REST_URL+"messages/?userId={userId}",List.class,userId);
         return messages;
     }
 }

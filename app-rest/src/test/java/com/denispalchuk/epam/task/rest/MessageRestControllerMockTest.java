@@ -157,7 +157,7 @@ public class MessageRestControllerMockTest {
         messageService.getAllMessagesByTimePeriod(startDateTime, finishDateTime);
         expectLastCall().andReturn(messages);
         replay(messageService);
-        this.mockMvc.perform(get("/messages/bytime")
+        this.mockMvc.perform(post("/messages/bytime")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(dateTimeJson)
                 .contentType(MediaType.APPLICATION_JSON))

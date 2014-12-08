@@ -65,7 +65,7 @@ public class MessageRestController {
         return new ResponseEntity("", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/bytime", method = RequestMethod.GET)
+    @RequestMapping(value = "/bytime", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<List<Message>> getMessagesByTimePeriod(@RequestBody Map<String,LocalDateTime> params) {
         List messages = messageService.getAllMessagesByTimePeriod(params.get("startDateTime"),params.get("finishDateTime"));
